@@ -1,220 +1,98 @@
 // Import thư viện Mongoose
 const mongoose = require("mongoose");
 
-// Import Module Order Model
-const orderModel = require("../models/orderModel");
-const userModel = require("../models/userModel");
+// Import Module Drink Model
 const drinkModel = require("../models/drinkModel");
-const voucherModel = require("../models/voucherModel");
 
-
-const getAllOrder = (request, response) => {
+const getAllDrink = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     // B2: Validate dữ liệu
     // B3: Gọi Model tạo dữ liệu
-    orderModel.find((error, data) => {
+    drinkModel.find((error, data) => {
         if (error) {
             return response.status(500).json({
                 status: "Internal server error",
                 message: error.message
             })
         }
-
-        return response.status(200).json({
-            status: "Get all Order successfully",
-            data: data
-        })
+        return response.status(200).json(
+            data
+        )
     })
 }
 
-const createOrder = (request, response) => {
+const createDrink = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const body = request.body;
-    // Sử dụng email để tìm kiếm
-    const fullName = body.hoTen;
-    const email = body.email;
-    const address = body.diaChi;
-    const phone = body.soDienThoai;
-    const pizzaSize = body.kichCo;
-    const drink = body.idLoaiNuocUong; // Lúc này truyền vào là ObjectId
-    const pizzaType = body.loaiPizza;
-    const voucher = body.idVourcher; // Lúc này truyền vào là idVoucher
-    // const status = body.status;
+    console.log(body);
 
-    // orderCode: String, unique
-    // pizzaSize: String, required
-    // pizzaType: String, required
-    // voucher: ObjectID, ref: Voucher
-    // drink: ObjectID, ref: Drink
-    // status: String, required
-
-    // B2: Validate dữ liệu
-    // Kiểm tra orderCode có hợp lệ hay không
-    // if (orderCode) {
-    //     return response.status(400).json({
-    //         status: "Bad Request",
-    //         message: "orderCode không hợp lệ"
-    //     })
+    // {
+    //     maNuocUong: 'Devcamp R2227',
+    //     tenNuocUong: 'NodeJS & ReactJs',
+    //     donGia: 25
     // }
 
-    // Kiểm tra pizzaSize có hợp lệ hay không
-    if (!fullName) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "hoTen không hợp lệ crearte"
-        })
-    }
-
-    if (!email) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "email không hợp lệ"
-        })
-    }
-
-    if (!address) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "địa chỉ không hợp lệ"
-        })
-    }
-
-    if (!phone || isNaN(phone)) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "số điện thoại không hợp lệ"
-        })
-    }
-
-    if (!mongoose.Types.ObjectId.isValid(drink)) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "DrinkId không hợp lệ"
-        })
-    }
-
-    // Kiểm tra pizzaType có hợp lệ hay không
-    if (!pizzaType) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "pizzaType không hợp lệ"
-        })
-    }
-
-    // Kiểm tra pizzaType có hợp lệ hay không
-    if (!pizzaSize) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "pizzaSize không hợp lệ"
-        })
-    }
-
-    // Kiểm tra voucher có hợp lệ hay không
-    if (!mongoose.Types.ObjectId.isValid(voucher)) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "voucherId không hợp lệ"
-        })
-    }
-
-
-
-    // B3: Gọi Model tạo dữ liệu user và order
-    const newOrder = {
-        _id: mongoose.Types.ObjectId(),
-        pizzaSize: pizzaSize,
-        pizzaType: pizzaType,
-        voucher: voucher,
-        drink: drink
-    }
-
-    const newUser = {
-        fullName: fullName,
-        email: email,
-        address: address,
-        phone: phone
-    }
-
-    console.log(newUser)
-    console.log(newOrder)
-
-    const condition = { email: email };
-    userModel
-        .findOne(condition)
-        .exec((error, existUser) => {
-            if (error) {
-                return response.status(500).json({
-                    status: "Internal server error find ExistUser ",
-                    message: error.message
-                })
-            } else {
-                if (!existUser) {
-                    // Nếu User không tồn tại
-                    userModel.create(newUser, (errCreateUser, createdUser) => {
-                        if (errCreateUser) {
-                            return response.status(500).json({
-                                status: "Internal server error: errCreateUser",
-                                message: errCreateUser.message
-                            })
-                        } else {
-                            orderModel.create(newOrder, (errCreateOrder, createdOrder) => {
-                                if (errCreateOrder) {
-                                    return response.status(500).json({
-                                        status: "Internal server error: errCreateUser",
-                                        message: errCreateUser.message
-                                    })
-                                } else {
-                                    createdUser.orders.push(createdOrder._id)
-                                    return response.status(201).json({
-                                        status: "Create Drink successfully",
-                                        data: createdOrder
-                                    })
-                                }
-
-
-                            })
-                        }
-                    })
-                } else {
-                    //Nếu user đã tồn tại
-                    orderModel.create(newOrder, (errCreateOrder, createdOrder) => {
-                        if (errCreateOrder) {
-                            return response.status(500).json({
-                                status: "Internal server error errCreateOrder- ExistUser",
-                                message: errCreateOrder.message
-                            })
-                        } else {
-                            existUser.orders.push(createdOrder._id)
-                            console.log("createdOrder Succesfully")
-                            return response.status(201).json({
-                                status: "Internal server error",
-                                order: createdOrder,
-                                user: existUser,
-                                orderCode: createdOrder.orderCode,
-                            })
-                        }
-                    })
-
-                }
-            }
-
-        })
-}
-
-const getOrderById = (request, response) => {
-    // B1: Chuẩn bị dữ liệu
-    const orderId = request.params.orderId;
-
     // B2: Validate dữ liệu
-    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    // Kiểm tra maNuocUong có hợp lệ hay không
+    if (!body.maNuocUong) {
         return response.status(400).json({
             status: "Bad Request",
-            message: "orderID không hợp lệ"
+            message: "maNuocUong không hợp lệ"
+        })
+    }
+
+    if (!body.tenNuocUong) {
+        return response.status(400).json({
+            status: "Bad Request",
+            message: "tenNuocUong không hợp lệ"
+        })
+    }
+
+    // Kiểm tra donGia có hợp lệ hay không
+    if (isNaN(body.donGia) || body.donGia < 0) {
+        return response.status(400).json({
+            status: "Bad Request",
+            message: "No Student không hợp lệ"
         })
     }
 
     // B3: Gọi Model tạo dữ liệu
-    orderModel.findById(orderId, (error, data) => {
+    const newDrink = {
+        _id: mongoose.Types.ObjectId(),
+        maNuocUong: body.maNuocUong,
+        tenNuocUong: body.tenNuocUong,
+        donGia: body.donGia
+    }
+
+    drinkModel.create(newDrink, (error, data) => {
+        if (error) {
+            return response.status(500).json({
+                status: "Internal server error",
+                message: error.message
+            })
+        }
+
+        return response.status(201).json({
+            status: "Create Drink successfully",
+            data: data
+        })
+    })
+}
+
+const getDrinkById = (request, response) => {
+    // B1: Chuẩn bị dữ liệu
+    const drinkId = request.params.drinkId;
+
+    // B2: Validate dữ liệu
+    if (!mongoose.Types.ObjectId.isValid(drinkId)) {
+        return response.status(400).json({
+            status: "Bad Request",
+            message: "drinkID không hợp lệ"
+        })
+    }
+
+    // B3: Gọi Model tạo dữ liệu
+    drinkModel.findById(drinkId, (error, data) => {
         if (error) {
             return response.status(500).json({
                 status: "Internal server error",
@@ -223,84 +101,62 @@ const getOrderById = (request, response) => {
         }
 
         return response.status(200).json({
-            status: "Get detail Order successfully",
+            status: "Get detail Drink successfully",
             data: data
         })
     })
 }
 
-const updateOrderById = (request, response) => {
+const updateDrinkById = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const orderId = request.params.orderId;
+    const drinkId = request.params.drinkId;
     const body = request.body;
 
     // B2: Validate dữ liệu
-    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    if (!mongoose.Types.ObjectId.isValid(drinkId)) {
         return response.status(400).json({
             status: "Bad Request",
-            message: "orderID không hợp lệ"
+            message: "drinkID không hợp lệ"
         })
     }
 
-
-    if (body.orderCode !== undefined && body.orderCode.trim() === "") {
+    if (body.maNuocUong !== undefined && body.maNuocUong.trim() === "") {
         return response.status(400).json({
             status: "Bad Request",
-            message: "orderCode không hợp lệ"
+            message: "maNuocUong không hợp lệ"
         })
     }
 
-    if (body.pizzaSize !== undefined && body.pizzaSize.trim() === "") {
+    if (body.tenNuocUong !== undefined && body.tenNuocUong.trim() === "") {
         return response.status(400).json({
             status: "Bad Request",
-            message: "pizzaSize không hợp lệ"
+            message: "tenNuocUong không hợp lệ"
         })
     }
 
-    if (body.voucher !== undefined && body.voucher.trim() === "") {
+    if (body.donGia !== undefined && (isNaN(body.donGia) || body.donGia < 0)) {
         return response.status(400).json({
             status: "Bad Request",
-            message: "voucher không hợp lệ"
-        })
-    }
-
-    if (body.drink !== undefined && body.drink.trim() === "") {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "orderCode không hợp lệ"
-        })
-    }
-
-    if (body.status !== undefined && body.status.trim() === "") {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "orderCode không hợp lệ"
+            message: "donGia không hợp lệ"
         })
     }
 
     // B3: Gọi Model tạo dữ liệu
-    const updateOrder = {}
+    const updateDrink = {}
 
-    if (body.orderCode !== undefined) {
-        updateOrder.orderCode = body.orderCode
-    }
-    if (body.pizzaSize !== undefined) {
-        updateOrder.pizzaSize = body.pizzaSize
-    }
-    if (body.pizzaType !== undefined) {
-        updateOrder.pizzaType = body.pizzaType
-    }
-    if (body.voucher !== undefined) {
-        updateOrder.voucher = body.voucher
-    }
-    if (body.drink !== undefined) {
-        updateOrder.drink = body.drink
-    }
-    if (body.status !== undefined) {
-        updateOrder.status = body.status
+    if (body.maNuocUong !== undefined) {
+        updateDrink.maNuocUong = body.maNuocUong
     }
 
-    orderModel.findByIdAndUpdate(orderId, updateOrder, (error, data) => {
+    if (body.tenNuocUong !== undefined) {
+        updateDrink.tenNuocUong = body.tenNuocUong
+    }
+
+    if (body.donGia !== undefined) {
+        updateDrink.donGia = body.donGia
+    }
+
+    drinkModel.findByIdAndUpdate(drinkId, updateDrink, (error, data) => {
         if (error) {
             return response.status(500).json({
                 status: "Internal server error",
@@ -309,26 +165,26 @@ const updateOrderById = (request, response) => {
         }
 
         return response.status(200).json({
-            status: "Update Order successfully",
+            status: "Update Drink successfully",
             data: data
         })
     })
 }
 
-const deleteOrderById = (request, response) => {
+const deleteDrinkById = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const orderId = request.params.orderId;
+    const drinkId = request.params.drinkId;
 
     // B2: Validate dữ liệu
-    if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    if (!mongoose.Types.ObjectId.isValid(drinkId)) {
         return response.status(400).json({
             status: "Bad Request",
-            message: "orderID không hợp lệ"
+            message: "drinkID không hợp lệ"
         })
     }
 
     // B3: Gọi Model tạo dữ liệu
-    orderModel.findByIdAndDelete(orderId, (error, data) => {
+    drinkModel.findByIdAndDelete(drinkId, (error, data) => {
         if (error) {
             return response.status(500).json({
                 status: "Internal server error",
@@ -337,16 +193,15 @@ const deleteOrderById = (request, response) => {
         }
 
         return response.status(200).json({
-            status: "Delete Order successfully"
+            status: "Delete Drink successfully"
         })
     })
 }
 
-
 module.exports = {
-    getAllOrder,
-    createOrder,
-    getOrderById,
-    updateOrderById,
-    deleteOrderById
+    getAllDrink,
+    createDrink,
+    getDrinkById,
+    updateDrinkById,
+    deleteDrinkById
 }
