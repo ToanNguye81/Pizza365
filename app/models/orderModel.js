@@ -1,6 +1,8 @@
 // Khai báo thư viện mongo
 const mongoose = require("mongoose")
 
+const crypto = require("crypto")
+
 //Khai báo class Schema
 const Schema = mongoose.Schema
 
@@ -14,7 +16,7 @@ const orderSchema = new Schema({
         type: String,
         unique: true,
         default: () => {
-            return randToken.generate(64);
+            return crypto.randomBytes(64);
         }
     },
     pizzaSize: {
@@ -37,7 +39,8 @@ const orderSchema = new Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        default: "Open"
     }
 }, {
     //Lưu dấu bảng ghi được cập nhật vào thời gian nào

@@ -1,7 +1,7 @@
 "use strict";
 /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
 var gThongTinGuiDon = {};
-const gBASE_URL = "/devcamp-pizza365/drinks"
+const gBASE_URL = "/devcamp-pizza365"
 
 
 /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
@@ -102,7 +102,7 @@ function checkMaGiamGia(paramThongTinGuiDon) {
     var vMaGiamGia = paramThongTinGuiDon.idVourcher;
     // lấy data từ server   
     $.ajax({
-        url: "/devcamp-pizza365/voucher_detail/" + vMaGiamGia,
+        url: gBASE_URL + "/voucher_detail/" + vMaGiamGia,
         type: "GET",
         dataType: 'json',
         success: function(responseObject) {
@@ -218,7 +218,7 @@ function createNewOrder(paramOrderInfo) {
     $('#modal-order-detail').modal('hide')
         // Update dữ liệu lên server
     $.ajax({
-        url: "/devcamp-pizza365/orders",
+        url: gBASE_URL + "/orders",
         type: 'POST',
         data: JSON.stringify(paramOrderInfo),
         dataType: 'json', // added data type
@@ -280,7 +280,7 @@ function loadDrinkList() {
     "use strict";
     // lấy data từ server   
     $.ajax({
-        url: gBASE_URL,
+        url: gBASE_URL + "/drinks",
         type: "GET",
         dataType: 'json',
         success: function(responseObject) {
@@ -307,7 +307,7 @@ function loadDataToDrinkSelect(paramDataObj) {
     for (var bI = 0; bI < paramDataObj.length; bI++) {
         $('#select-drink').append($('<option>', {
             value: paramDataObj[bI].maNuocUong,
-            text: paramDataObj[bI].tenNuocUong
+            text: paramDataObj[bI]._id
         }));
     }
 }
