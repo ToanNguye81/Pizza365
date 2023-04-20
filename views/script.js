@@ -1,7 +1,7 @@
 "use strict";
 /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
 var gThongTinGuiDon = {};
-const gBASE_URL = "/devcamp-pizza365"
+const gBASE_URL = "/pizza365"
 
 
 /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */

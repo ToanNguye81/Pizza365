@@ -53,7 +53,7 @@ const voucherRouter = require("./app/routers/voucherRouter");
 const orderRouter = require("./app/routers/orderRouter");
 const userRouter = require("./app/routers/userRouter");
 
-// Khai báo APi dạng Get "/devcamp-pizza365" sẽ chạy vào đây
+// Khai báo APi dạng Get "/pizza365" sẽ chạy vào đây
 app.get("/", (request, response) => {
     console.log(__dirname);
     //Chạy file HTML với đường dẫn / cần dòng 2
@@ -62,10 +62,10 @@ app.get("/", (request, response) => {
 })
 
 // App sử dụng router
-app.use("/devcamp-pizza365", drinkRouter);
-app.use("/devcamp-pizza365", voucherRouter);
-app.use("/devcamp-pizza365", orderRouter);
-app.use("/devcamp-pizza365", userRouter);
+app.use("/pizza365", drinkRouter);
+app.use("/pizza365", voucherRouter);
+app.use("/pizza365", orderRouter);
+app.use("/pizza365", userRouter);
 
 //Để hiển thị ảnh cần thêm middleware static vào express
 app.use(express.static(__dirname + "/views"))
