@@ -311,7 +311,7 @@ function loadDataToDrinkSelect(paramDataObj) {
     for (var bI = 0; bI < paramDataObj.length; bI++) {
         $('#select-drink').append($('<option>', {
             value: paramDataObj[bI].maNuocUong,
-            text: paramDataObj[bI]._id
+            text: paramDataObj[bI].tenNuocUong
         }));
     }
 }
