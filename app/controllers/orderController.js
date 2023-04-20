@@ -31,37 +31,21 @@ const createOrder = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const body = request.body;
     // Sử dụng email để tìm kiếm
-    const fullName = body.hoTen;
+    const fullName = body.fullName;
     const email = body.email;
     const address = body.diaChi;
     const phone = body.soDienThoai;
     const pizzaSize = body.kichCo;
-    const drink = body.idLoaiNuocUong; // Lúc này truyền vào là ObjectId
+    const drink = body.idLoaiNuocUong; 
     const pizzaType = body.loaiPizza;
-    const voucher = body.idVourcher; // Lúc này truyền vào là idVoucher
-    // const status = body.status;
+    const voucher = body.idVoucher; 
 
-    // orderCode: String, unique
-    // pizzaSize: String, required
-    // pizzaType: String, required
-    // voucher: ObjectID, ref: Voucher
-    // drink: ObjectID, ref: Drink
-    // status: String, required
-
-    // B2: Validate dữ liệu
-    // Kiểm tra orderCode có hợp lệ hay không
-    // if (orderCode) {
-    //     return response.status(400).json({
-    //         status: "Bad Request",
-    //         message: "orderCode không hợp lệ"
-    //     })
-    // }
 
     // Kiểm tra pizzaSize có hợp lệ hay không
     if (!fullName) {
         return response.status(400).json({
             status: "Bad Request",
-            message: "hoTen không hợp lệ crearte"
+            message: "fullName không hợp lệ "
         })
     }
 
@@ -117,8 +101,6 @@ const createOrder = (request, response) => {
         })
     }
 
-
-
     // B3: Gọi Model tạo dữ liệu user và order
     const newOrder = {
         _id: mongoose.Types.ObjectId(),
@@ -134,9 +116,6 @@ const createOrder = (request, response) => {
         address: address,
         phone: phone
     }
-
-    console.log(newUser)
-    console.log(newOrder)
 
     const condition = { email: email };
     userModel
@@ -185,7 +164,6 @@ const createOrder = (request, response) => {
                             })
                         } else {
                             existUser.orders.push(createdOrder._id)
-                            console.log("createdOrder Succesfully")
                             return response.status(201).json({
                                 status: "Internal server error",
                                 order: createdOrder,

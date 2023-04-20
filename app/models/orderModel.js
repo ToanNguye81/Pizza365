@@ -28,12 +28,10 @@ const orderSchema = new Schema({
         required: true
     },
     voucher: {
-        // Array[ObjectId],
         type: mongoose.Types.ObjectId,
         ref: "Voucher"
     },
     drink: {
-        // Array[ObjectId],
         type: mongoose.Types.ObjectId,
         ref: "Drink"
     },

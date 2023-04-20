@@ -63,7 +63,7 @@ function onSendBtnClick() {
     }
 
     //Xử lý idVoucher nhập vào và hiển thị
-    if (gThongTinGuiDon.idVourcher == "") {
+    if (gThongTinGuiDon.idVoucher == "") {
         //Không có vourcher
         gThongTinGuiDon.giamGia = 0;
         gThongTinGuiDon.thanhTien = gThongTinGuiDon.giaVND;
@@ -87,11 +87,11 @@ function onPageLoading() {
 //function trả lại một đối tượng Combo được tham số  
 // Hàm lấy thông tin từ trường input
 function getUserData(paramObject) {
-    paramObject.hoTen = $("#inp-ho-ten").val().trim();
+    paramObject.fullName = $("#inp-ho-ten").val().trim();
     paramObject.email = $("#inp-email").val().trim();
     paramObject.soDienThoai = $("#inp-so-dien-thoai").val().trim();
     paramObject.diaChi = $("#inp-dia-chi").val().trim();
-    paramObject.idVourcher = $("#inp-ma-giam-gia").val().trim();
+    paramObject.idVoucher = $("#inp-ma-giam-gia").val().trim();
     paramObject.loiNhan = $("#inp-loi-nhan").val().trim();
     paramObject.idLoaiNuocUong = $("#select-drink").find(":selected").val();
 };
@@ -99,7 +99,7 @@ function getUserData(paramObject) {
 //Check mã giảm giá và tính discount
 function checkMaGiamGia(paramThongTinGuiDon) {
     "use strict";
-    var vMaGiamGia = paramThongTinGuiDon.idVourcher;
+    var vMaGiamGia = paramThongTinGuiDon.idVoucher;
     // lấy data từ server   
     $.ajax({
         url: gBASE_URL + "/voucher_detail/" + vMaGiamGia,
@@ -157,7 +157,7 @@ function validData(paramThongTinGuiDon) {
         alert("Bạn chưa chọn Loại Nước Ngọt");
         return false
     }
-    if (paramThongTinGuiDon.hoTen == "") {
+    if (paramThongTinGuiDon.fullName == "") {
         alert("Bạn chưa nhập họ tên");
         return false
     }
@@ -183,14 +183,14 @@ function validData(paramThongTinGuiDon) {
 //Load data to modal
 function loadDataToModal(paramOrderObject) {
     "use strict"
-    $("#input-modal-ho-ten").val(paramOrderObject.hoTen);
+    $("#input-modal-ho-ten").val(paramOrderObject.fullName);
     $("#input-modal-so-dien-thoai").val(paramOrderObject.soDienThoai);
     $("#input-modal-dia-chi").val(paramOrderObject.diaChi);
     $("#input-modal-loi-nhan").val(paramOrderObject.loiNhan);
-    $("#input-modal-ma-giam-gia").val(paramOrderObject.idVourcher);
+    $("#input-modal-ma-giam-gia").val(paramOrderObject.idVoucher);
 
     var vAreaTextVal =
-        "Xác nhận: " + paramOrderObject.hoTen + '\r\n' +
+        "Xác nhận: " + paramOrderObject.fullName + '\r\n' +
         "Email: " + paramOrderObject.email + '\r\n' +
         "Địa chỉ: " + paramOrderObject.diaChi + '\r\n' +
         "Lời nhắn: " + paramOrderObject.loiNhan + '\r\n' +
@@ -204,7 +204,7 @@ function loadDataToModal(paramOrderObject) {
         "Loại nước ngọt: " + paramOrderObject.idLoaiNuocUong + '\r\n' +
         "=========================================" + '\r\n' +
         "Loại pizza: " + paramOrderObject.loaiPizza + '\r\n' +
-        "Mã voucher: " + paramOrderObject.idVourcher + '\r\n' +
+        "Mã voucher: " + paramOrderObject.idVoucher + '\r\n' +
         "Giá vnd: " + paramOrderObject.giaVND + '\r\n' +
         "Discount %:  " + paramOrderObject.giamGia + " %" + '\r\n' +
         "Phải thanh toán vnd: " + paramOrderObject.thanhTien;
@@ -303,6 +303,10 @@ function loadDataToDrinkSelect(paramDataObj) {
     $('#select-drink').append($('<option>', {
         value: 0,
         text: '== Chọn loại nước uống =='
+    }));
+    $('#select-drink').append($('<option>', {
+        value: 2,
+        text: 'Cocacola'
     }));
     for (var bI = 0; bI < paramDataObj.length; bI++) {
         $('#select-drink').append($('<option>', {

@@ -26,14 +26,6 @@ const getAllUser = (request, response) => {
 const createUser = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const body = request.body;
-    // {
-    // fullName: String, required
-    // email: String, required, unique
-    // address: String, required
-    // phone: String, required, unique
-    // orders: Array[ObjectID], ref: Order
-    // }
-
     // B2: Validate dữ liệu
     // Kiểm tra fullName có hợp lệ hay không
     if (!body.fullName) {
@@ -66,14 +58,6 @@ const createUser = (request, response) => {
             message: "phone không hợp lệ"
         })
     }
-
-    //Kiểm tra orders cóhợp lệ không
-    // if (!body.orders) {
-    //     return response.status(400).json({
-    //         status: "Bad Request",
-    //         message: "orders không hợp lệ"
-    //     })
-    // }
 
     // B3: Gọi Model tạo dữ liệu
     const newUser = {
@@ -247,8 +231,6 @@ const getLimitUser = (request, response) => {
     //B2: Validate dữ liệu
     //B3: Thao tác với cơ sở dữ liệu
     userModel.find()
-        // .sort({ title: 'desc' })
-        // .skip(3)
         .limit(limitUser)
         .exec((error, data) => {
             if (error) {
@@ -294,8 +276,6 @@ const getSortUser = (request, response) => {
     //B3: Thao tác với cơ sở dữ liệu
     userModel.find()
         .sort({ fullName: 'asc' })
-        // .skip(skipUser)
-        // .limit()
         .exec((error, data) => {
             if (error) {
                 return response.status(500).json({
@@ -320,7 +300,6 @@ const getSkipLimitUser = (request, response) => {
     //B2: Validate dữ liệu
     //B3: Thao tác với cơ sở dữ liệu
     userModel.find()
-        // .sort({ fullName: 'asc' })
         .skip(skipUser)
         .limit(limitUser)
         .exec((error, data) => {
@@ -336,20 +315,6 @@ const getSkipLimitUser = (request, response) => {
                 })
             }
         });
-    /*
-    userModel.find(condition, {_id:0, title:1, description:1}, (error, data) => {
-        if(error) {
-            return response.status(500).json({
-                status: "Error 500: Internal server error",
-                message: error.message
-            })
-        } else {
-            return response.status(200).json({
-                status: "Success: Get courses success",
-                data: data
-            })
-        }
-    })*/
 }
 
 const getSortSkipLimitUser = (request, response) => {

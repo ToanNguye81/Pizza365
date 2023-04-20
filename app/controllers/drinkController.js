@@ -7,7 +7,7 @@ const drinkModel = require("../models/drinkModel");
 const getAllDrink = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     // B2: Validate dữ liệu
-    // B3: Gọi Model tạo dữ liệu
+    // B3: Gọi Model lấy dữ liệu
     drinkModel.find((error, data) => {
         if (error) {
             return response.status(500).json({
@@ -23,25 +23,18 @@ const getAllDrink = (request, response) => {
 
 const createDrink = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const body = request.body;
-    console.log(body);
-
-    // {
-    //     maNuocUong: 'Devcamp R2227',
-    //     tenNuocUong: 'NodeJS & ReactJs',
-    //     donGia: 25
-    // }
-
+    const { maNuocUong,tenNuocUong,donGia} = request.body;
     // B2: Validate dữ liệu
     // Kiểm tra maNuocUong có hợp lệ hay không
-    if (!body.maNuocUong) {
+    if (!maNuocUong) {
         return response.status(400).json({
             status: "Bad Request",
             message: "maNuocUong không hợp lệ"
         })
     }
 
-    if (!body.tenNuocUong) {
+    // Kiểm tra tên nước uống có hợp lệ hay không
+    if (!tenNuocUong) {
         return response.status(400).json({
             status: "Bad Request",
             message: "tenNuocUong không hợp lệ"
@@ -49,7 +42,7 @@ const createDrink = (request, response) => {
     }
 
     // Kiểm tra donGia có hợp lệ hay không
-    if (isNaN(body.donGia) || body.donGia < 0) {
+    if (isNaN(donGia) || donGia < 0) {
         return response.status(400).json({
             status: "Bad Request",
             message: "No Student không hợp lệ"
@@ -59,9 +52,9 @@ const createDrink = (request, response) => {
     // B3: Gọi Model tạo dữ liệu
     const newDrink = {
         _id: mongoose.Types.ObjectId(),
-        maNuocUong: body.maNuocUong,
-        tenNuocUong: body.tenNuocUong,
-        donGia: body.donGia
+        maNuocUong: maNuocUong,
+        tenNuocUong: tenNuocUong,
+        donGia: donGia
     }
 
     drinkModel.create(newDrink, (error, data) => {
