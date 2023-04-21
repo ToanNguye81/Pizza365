@@ -25,19 +25,19 @@ $(document).ready(function() {
     //Hàm gán xử lý btn-ocean cho hàm xử lý sự kiện 
     $('#btn-ocean').click(function() {
         changePizzaTypeBtnColor(this)
-        gThongTinGuiDon.loaiPizza = "OCEAN MANIA";
+        gThongTinGuiDon.pizzaType = "OCEAN MANIA";
         console.log("Bạn đã gọi kiểu pizza: OCEAN MANIA ")
     });
     //Hàm gán xử lý btn-hawaiian cho hàm xử lý sự kiện 
     $('#btn-hawaiian').click(function() {
         changePizzaTypeBtnColor(this)
-        gThongTinGuiDon.loaiPizza = "HAWAIIAN";
+        gThongTinGuiDon.pizzaType = "HAWAIIAN";
         console.log("Bạn đã gọi kiểu pizza: HAWAIIAN ")
     });
     //Hàm gán xử lý btn-bacon cho hàm xử lý sự kiện 
     $('#btn-bacon').click(function() {
         changePizzaTypeBtnColor(this)
-        gThongTinGuiDon.loaiPizza = "CHEESY CHICKEN BACON";
+        gThongTinGuiDon.pizzaType = "CHEESY CHICKEN BACON";
         console.log("Bạn đã gọi kiểu pizza: CHEESY CHICKEN BACON ")
     });
     //Hàm xử lý khi nhấn send
@@ -62,8 +62,8 @@ function onSendBtnClick() {
         return;
     }
 
-    //Xử lý idVoucher nhập vào và hiển thị
-    if (gThongTinGuiDon.idVoucher == "") {
+    //Xử lý voucher nhập vào và hiển thị
+    if (gThongTinGuiDon.voucher == "") {
         //Không có vourcher
         gThongTinGuiDon.giamGia = 0;
         gThongTinGuiDon.thanhTien = gThongTinGuiDon.giaVND;
@@ -89,17 +89,17 @@ function onPageLoading() {
 function getUserData(paramObject) {
     paramObject.fullName = $("#inp-ho-ten").val().trim();
     paramObject.email = $("#inp-email").val().trim();
-    paramObject.soDienThoai = $("#inp-so-dien-thoai").val().trim();
-    paramObject.diaChi = $("#inp-dia-chi").val().trim();
-    paramObject.idVoucher = $("#inp-ma-giam-gia").val().trim();
+    paramObject.phone = $("#inp-so-dien-thoai").val().trim();
+    paramObject.address = $("#inp-dia-chi").val().trim();
+    paramObject.voucher = $("#inp-ma-giam-gia").val().trim();
     paramObject.loiNhan = $("#inp-loi-nhan").val().trim();
-    paramObject.idLoaiNuocUong = $("#select-drink").find(":selected").val();
+    paramObject.drink = $("#select-drink").find(":selected").val();
 };
 
 //Check mã giảm giá và tính discount
 function checkMaGiamGia(paramThongTinGuiDon) {
     "use strict";
-    var vMaGiamGia = paramThongTinGuiDon.idVoucher;
+    var vMaGiamGia = paramThongTinGuiDon.voucher;
     // lấy data từ server   
     $.ajax({
         url: gBASE_URL + "/voucher_detail/" + vMaGiamGia,
@@ -145,15 +145,15 @@ function isEmail(paramEmail) {
 //Valid Data
 function validData(paramThongTinGuiDon) {
     'use strict'
-    if (paramThongTinGuiDon.kichCo == null) {
+    if (paramThongTinGuiDon.pizzaSize == null) {
         alert("Bạn chưa chọn Combo");
         return false
     }
-    if (paramThongTinGuiDon.loaiPizza == null) {
+    if (paramThongTinGuiDon.pizzaType == null) {
         alert("Bạn chưa chọn Kiểu Pizza");
         return false
     }
-    if (paramThongTinGuiDon.idLoaiNuocUong == "0") {
+    if (paramThongTinGuiDon.drink == "0") {
         alert("Bạn chưa chọn Loại Nước Ngọt");
         return false
     }
@@ -165,11 +165,11 @@ function validData(paramThongTinGuiDon) {
         alert("Email chưa đúng định dạng");
         return false
     }
-    if (!isPhoneNumber(paramThongTinGuiDon.soDienThoai)) {
+    if (!isPhoneNumber(paramThongTinGuiDon.phone)) {
         alert("Số điện thoại không hợp lệ");
         return false
     }
-    if (paramThongTinGuiDon.diaChi == "") {
+    if (paramThongTinGuiDon.address == "") {
         alert("Bạn chưa nhập địa chỉ");
         return false
     }
@@ -184,27 +184,27 @@ function validData(paramThongTinGuiDon) {
 function loadDataToModal(paramOrderObject) {
     "use strict"
     $("#input-modal-ho-ten").val(paramOrderObject.fullName);
-    $("#input-modal-so-dien-thoai").val(paramOrderObject.soDienThoai);
-    $("#input-modal-dia-chi").val(paramOrderObject.diaChi);
+    $("#input-modal-so-dien-thoai").val(paramOrderObject.phone);
+    $("#input-modal-dia-chi").val(paramOrderObject.address);
     $("#input-modal-loi-nhan").val(paramOrderObject.loiNhan);
-    $("#input-modal-ma-giam-gia").val(paramOrderObject.idVoucher);
+    $("#input-modal-ma-giam-gia").val(paramOrderObject.voucher);
 
     var vAreaTextVal =
         "Xác nhận: " + paramOrderObject.fullName + '\r\n' +
         "Email: " + paramOrderObject.email + '\r\n' +
-        "Địa chỉ: " + paramOrderObject.diaChi + '\r\n' +
+        "Địa chỉ: " + paramOrderObject.address + '\r\n' +
         "Lời nhắn: " + paramOrderObject.loiNhan + '\r\n' +
-        "số điện thoại: " + paramOrderObject.soDienThoai + '\r\n' +
+        "số điện thoại: " + paramOrderObject.phone + '\r\n' +
         "=========================================" + '\r\n' +
-        "Kích cỡ: " + paramOrderObject.kichCo + '\r\n' +
+        "Kích cỡ: " + paramOrderObject.pizzaSize + '\r\n' +
         "Đường kính: " + paramOrderObject.duongKinh + '\r\n' +
         "salad: " + paramOrderObject.salad + '\r\n' +
         "Nước ngọt: " + paramOrderObject.soLuongNuoc + '\r\n' +
         "Sườn nướng: " + paramOrderObject.suon + '\r\n' +
-        "Loại nước ngọt: " + paramOrderObject.idLoaiNuocUong + '\r\n' +
+        "Loại nước ngọt: " + paramOrderObject.drink + '\r\n' +
         "=========================================" + '\r\n' +
-        "Loại pizza: " + paramOrderObject.loaiPizza + '\r\n' +
-        "Mã voucher: " + paramOrderObject.idVoucher + '\r\n' +
+        "Loại pizza: " + paramOrderObject.pizzaType + '\r\n' +
+        "Mã voucher: " + paramOrderObject.voucher + '\r\n' +
         "Giá vnd: " + paramOrderObject.giaVND + '\r\n' +
         "Discount %:  " + paramOrderObject.giamGia + " %" + '\r\n' +
         "Phải thanh toán vnd: " + paramOrderObject.thanhTien;
@@ -266,7 +266,7 @@ function changePizzaTypeBtnColor(paramClick) {
 //Hàm lấy thông tin ComBo 
 function getCombo(paramContainerObj, paramCombo, paramDuongKinh, paramSuonNuong, paramSalad, paramNuocNgot, paramPrice) {
 
-    paramContainerObj.kichCo = paramCombo;
+    paramContainerObj.pizzaSize = paramCombo;
     paramContainerObj.duongKinh = paramDuongKinh;
     paramContainerObj.suon = paramSuonNuong;
     paramContainerObj.salad = paramSalad;
@@ -303,10 +303,6 @@ function loadDataToDrinkSelect(paramDataObj) {
     $('#select-drink').append($('<option>', {
         value: 0,
         text: '== Chọn loại nước uống =='
-    }));
-    $('#select-drink').append($('<option>', {
-        value: 2,
-        text: 'Cocacola'
     }));
     for (var bI = 0; bI < paramDataObj.length; bI++) {
         $('#select-drink').append($('<option>', {

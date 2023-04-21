@@ -33,12 +33,12 @@ const createOrder = (request, response) => {
     // Sử dụng email để tìm kiếm
     const fullName = body.fullName;
     const email = body.email;
-    const address = body.diaChi;
-    const phone = body.soDienThoai;
-    const pizzaSize = body.kichCo;
-    const drink = body.idLoaiNuocUong; 
-    const pizzaType = body.loaiPizza;
-    const voucher = body.idVoucher; 
+    const address = body.address;
+    const phone = body.phone;
+    const pizzaSize = body.pizzaSize;
+    const drink = body.drink; 
+    const pizzaType = body.pizzaType;
+    const voucher = body.voucher; 
 
 
     // Kiểm tra pizzaSize có hợp lệ hay không
@@ -70,15 +70,16 @@ const createOrder = (request, response) => {
         })
     }
 
-    if (!mongoose.Types.ObjectId.isValid(drink)) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "DrinkId không hợp lệ"
-        })
-    }
 
     // Kiểm tra pizzaType có hợp lệ hay không
     if (!pizzaType) {
+        return response.status(400).json({
+            status: "Bad Request",
+            message: "pizzaType không hợp lệ"
+        })
+    }
+    // Kiểm tra pizzaType có hợp lệ hay không
+    if (!drink) {
         return response.status(400).json({
             status: "Bad Request",
             message: "pizzaType không hợp lệ"
@@ -94,12 +95,12 @@ const createOrder = (request, response) => {
     }
 
     // Kiểm tra voucher có hợp lệ hay không
-    if (!mongoose.Types.ObjectId.isValid(voucher)) {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "voucherId không hợp lệ"
-        })
-    }
+    // if (!mongoose.Types.ObjectId.isValid(voucher)) {
+    //     return response.status(400).json({
+    //         status: "Bad Request",
+    //         message: "voucherId không hợp lệ"
+    //     })
+    // }
 
     // B3: Gọi Model tạo dữ liệu user và order
     const newOrder = {
@@ -116,6 +117,8 @@ const createOrder = (request, response) => {
         address: address,
         phone: phone
     }
+
+    console.log(newUser,newOrder)
 
     const condition = { email: email };
     userModel
