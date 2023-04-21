@@ -16,7 +16,7 @@ const orderSchema = new Schema({
         type: String,
         unique: true,
         default: () => {
-            return crypto.randomBytes(64);
+            return crypto.randomBytes(64).toString('hex').substr(0, 6);
         }
     },
     pizzaSize: {
@@ -28,11 +28,11 @@ const orderSchema = new Schema({
         required: true
     },
     voucher: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         ref: "Voucher"
     },
     drink: {
-        type: mongoose.Types.ObjectId,
+        type: String,
         ref: "Drink"
     },
     status: {
