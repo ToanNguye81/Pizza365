@@ -13,24 +13,41 @@ const getAllOrder = (request, response) => {
     // B2: Validate dữ liệu
     // B3: Gọi Model tạo dữ liệu
     orderModel.find((error, data) => {
-        if (error) {
-            return response.status(500).json({
-                status: "Internal server error",
-                message: error.message
+            if (error) {
+                return response.status(500).json({
+                    status: "Internal server error",
+                    message: error.message
+                })
+            }
+            return response.status(200).json({
+                status: "Get all Order successfully",
+                data: data
             })
-        }
-
-        return response.status(200).json({
-            status: "Get all Order successfully",
-            data: data
         })
-    })
 }
 
 const createOrder = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const { fullName, email, address, phone, pizzaSize, drink, pizzaType, voucher } = request.body;
     const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink"]
+    console.log(request.body)
+// fullName
+// email
+// address
+// loiNhan
+// phone
+// pizzaSize
+// duongKinh
+// salad
+// soLuongNuoc
+// suon
+// drink
+// pizzaType
+// voucher
+// giaVND
+// giamGia
+// thanhTien
+//     console.log(body)
 
     // Check isEmpty in input fields 
     for (const field of fields) {
@@ -49,10 +66,10 @@ const createOrder = (request, response) => {
         pizzaType,
         voucher,
         drink,
-        status:"Open"
+        status: "Open"
     }
-
     const newUser = { fullName, email, address, phone }
+
 
     console.log("newUser", newUser)
     console.log("newOrder", newOrder)
@@ -69,12 +86,11 @@ const createOrder = (request, response) => {
                 })
             } else {
                 if (!existUser) {
-                console.log("!existUser")
+                    console.log("!existUser")
                     // Nếu User không tồn tại
                     userModel.create(newUser, (errCreateUser, createdUser) => {
                         if (errCreateUser) {
-                console.log("errCreateUser")
-                            
+                            console.log(errCreateUser.message)
                             return response.status(500).json({
                                 status: "Internal server error: errCreateUser",
                                 message: errCreateUser.message
@@ -88,15 +104,14 @@ const createOrder = (request, response) => {
                                         message: errCreateUser.message
                                     })
                                 } else {
-                                    console.log("Tạo mới được order")
                                     createdUser.orders.push(createdOrder._id)
                                     return response.status(201).json({
                                         status: "Create Drink successfully",
-                                        data: createdOrder
+                                        order: createdOrder,
+                                        user: createdUser,
+                                        orderCode: createdOrder.orderCode,
                                     })
                                 }
-
-
                             })
                         }
                     })
@@ -110,10 +125,11 @@ const createOrder = (request, response) => {
                                 message: errCreateOrder.message
                             })
                         } else {
-                            console.log( createdOrder.orderCode)
+                            console.log(createdOrder.orderCode)
+                            console.log(createdOrder._id)
                             existUser.orders.push(createdOrder._id)
                             return response.status(201).json({
-                                status: "Internal server error",
+                                status: "Create order Success",
                                 order: createdOrder,
                                 user: existUser,
                                 orderCode: createdOrder.orderCode,

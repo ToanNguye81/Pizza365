@@ -21,11 +21,115 @@
 
 <body>
     <div class="container-fluid bg-light p-2 m-2">
+        <div class="container-fluid mb-5">
+            <!-- Modal Detail -->
+            <div id="modal-order-detail" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thông tin đơn hàng</h5>
+                            <button type="button" class="cancel" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="bg-light p-4 mb-2">
+                                <div>
+                                    <label class="col-form-label pl-1" for="">Họ và tên</label>
+                                    <input type="text" id="input-modal-ho-ten" class="form-control" placeholder="Họ và tên...">
+                                </div>
+    
+                                <div>
+                                    <label class="col-form-label pl-1">Số điện thoại</label>
+                                    <input type="text" id="input-modal-so-dien-thoai" class="form-control" placeholder="Địa chỉ...">
+                                </div>
+    
+                                <div>
+                                    <label class="col-form-label pl-1">Địa chỉ</label>
+                                    <input type="text" id="input-modal-dia-chi" class="form-control" placeholder="Địa chỉ...">
+                                </div>
+    
+                                <div>
+                                    <label class="col-form-label pl-1">Lời nhắn</label>
+                                    <input type="text" id="input-modal-loi-nhan" class="form-control" placeholder="Lời nhắn...">
+                                </div>
+    
+                                <div>
+                                    <label class="col-form-label pl-1">Mã giảm giá</label>
+                                    <input type="text" id="input-modal-ma-giam-gia" class="form-control" placeholder="Mã giảm giá...">
+                                </div>
+    
+                                <div>
+                                    <label class="col-form-label pl-1">Thông tin chi tiết</label><br>
+                                    <textarea id="textarea-thong-tin-chi-tiet" class="container-fluid" rows="10"></textarea>
+                                </div>
+    
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="btn-quay-lai" class="btn btn-danger col-sm-2" data-dismiss="modal">Quay lại</button>
+                            <button type="button" id="btn-tao-don" class="btn btn-warning col-sm-2">Tạo đơn</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <!-- vùng hiển thị thông tin đơn hàng(order) -->
+            <div id="modal-ma-don-hang" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content bg-warning">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Cảm ơn bạn đã đặt hàng tại Pizza 365. Mã đơn hàng của bạn là:</h5>
+                            <button type="button" class="cancel bg-success" data-dismiss="modal">&times;</button>
+                        </div>
+                        <form class="p-4 mb-2 bg-warning">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label class="form-group">Mã đơn hàng </label>
+                                </div>
+                                <div id="div-order-code" class="col-sm-10 text-right mb-2">
+                                    <input type="text" class="form-control" id="inp-order-code"> </input>
+                                </div>
+                                <div class="col-sm-12 text-right">
+                                    <button id="btn-ok" class="btn btn-success col-sm-5" type="reset" data-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Navvbar -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav class="navbar fixed-top navbar-light bg-warning navbar-expand-lg">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav nav-fill w-100">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/">Trang Chủ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/#combo">Combo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/#pizzaType">Loại pizza</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/#order">Gửi đơn hàng  </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/dashboard">Bảng điều hiển  </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
         <div class="jumbotron container-fluid p-1 m-0">
             <div class="mb-1">
-                <button class="btn btn-success mr-1 bg-light">
-                    <a href="/" class>Home</a>
-                </button>
                 <h2 class="text-center">Danh sách đơn hàng</h2>
             </div>
             <div class="row form-group">
@@ -563,9 +667,9 @@
                     <th>Kích cỡ Combo</th>
                     <th>Loại Pizza</th>
                     <th>Nước uống</th>
-                    <th>Thành tiền</th>
                     <th>Họ và tên</th>
                     <th>Số điện thoại</th>
+                    <th>Email</th>
                     <th>Trạng thái</th>
                     <th>Chi tiết</th>
                 </tr>
@@ -588,12 +692,12 @@
         'use strict';
         /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
         // Biến toàn cục định nghĩa chỉ số các cột tương ứng
-        const gNAME_COL = ["orderCode", "kichCo", "loaiPizza", "idLoaiNuocUong", "thanhTien", "hoTen", "soDienThoai", "trangThai"]
+        const gNAME_COL = ["orderCode", "pizzaSize", "pizzaType", "drink", "fullName","phone", "status"]
         const gORDER_CODE_COL = 0;
         const gKICH_CO_COL = 1;
         const gLOAI_PIZZA_COL = 2;
         const gNUOC_UONG_COL = 3;
-        const gTHANH_TIEN_COL = 4;
+        const gVOUCHER_COL = 4;
         const gHO_VA_TEN_COL = 5;
         const gSO_DIEN_THOAI_COL = 6;
         const gTRANG_THAI_COL = 7;
@@ -641,20 +745,23 @@
             }, {
                 "data": gNAME_COL[gNUOC_UONG_COL]
             }, {
-                "data": gNAME_COL[gTHANH_TIEN_COL]
-            }, {
+                "data": gNAME_COL[gVOUCHER_COL]
+            },{
                 "data": gNAME_COL[gHO_VA_TEN_COL]
             }, {
                 "data": gNAME_COL[gSO_DIEN_THOAI_COL]
             }, {
                 "data": gNAME_COL[gTRANG_THAI_COL]
-            }, {
+            }, 
+            {
                 "data": gNAME_COL[gCHI_TIET_COL]
             }],
-            "columnDefs": [{
-                "targets": gLOAI_PIZZA_COL,
-                "render": convertToPizzaText
-            }, {
+            "columnDefs": [
+            //     {
+            //     "targets": gLOAI_PIZZA_COL,
+            //     "render": convertToPizzaText
+            // },
+             {
                 "targets": gCHI_TIET_COL,
                 "defaultContent": //"<button class='info-order btn btn-info'>Chi tiết</button>"
                     `<i class="fas fa-edit btn-edit-order" style="cursor: pointer;" data-toggle="tooltip" title="Edit Employee">&nbsp;</i>
@@ -778,7 +885,7 @@
             // Thu thập dữ liệu
             var vFilterData = getDataFromForm();
             // Kiểm tra dữ liệu
-            if (vFilterData.loaiPizza == "0" && vFilterData.trangThai == "0") {
+            if (vFilterData.pizzaType == "0" && vFilterData.trangThai == "0") {
                 onPageLoading();
                 return;
             }
@@ -837,7 +944,7 @@
             //Xóa toàn bộ dữ liệu đang có của bảng
             gOrderTable.clear();
             //Cập nhật data cho bảng 
-            gOrderTable.rows.add(paramResponseObject);
+            gOrderTable.rows.add(paramResponseObject.data);
             //Cập nhật lại giao diện hiển thị bảng
             gOrderTable.draw();
         }
@@ -846,7 +953,7 @@
         function getDataFromForm() {
             "use strict"
             return {
-                loaiPizza: $('#sel-pizza-type').val(),
+                pizzaType: $('#sel-pizza-type').val(),
                 trangThai: $('#sel-trang-thai').val()
             }
         }
@@ -855,12 +962,12 @@
         function handleFilter(paramFilterData) {
             "use strict"
             var vResultArr = gOrderData;
-            if (paramFilterData.loaiPizza != 0 && paramFilterData.trangThai != 0) {
+            if (paramFilterData.pizzaType != 0 && paramFilterData.trangThai != 0) {
                 vResultArr = gOrderData.filter(bUser => (
-                    bUser.loaiPizza == paramFilterData.loaiPizza && bUser.trangThai == paramFilterData.trangThai
+                    bUser.pizzaType == paramFilterData.pizzaType && bUser.trangThai == paramFilterData.trangThai
                 ));
-            } else if (paramFilterData.loaiPizza != 0) {
-                vResultArr = gOrderData.filter(bUser => bUser.loaiPizza == paramFilterData.loaiPizza);
+            } else if (paramFilterData.pizzaType != 0) {
+                vResultArr = gOrderData.filter(bUser => bUser.pizzaType == paramFilterData.pizzaType);
             } else if (paramFilterData.trangThai != 0) {
                 vResultArr = gOrderData.filter(bUser => bUser.trangThai == paramFilterData.trangThai);
             }
@@ -869,12 +976,12 @@
 
             "use strict"
             var vResultArr = gOrderData;
-            if (paramFilterData.loaiPizza != 0 && paramFilterData.trangThai != 0) {
+            if (paramFilterData.pizzaType != 0 && paramFilterData.trangThai != 0) {
                 vResultArr = gOrderData.filter(bUser => (
-                    bUser.loaiPizza == paramFilterData.loaiPizza && bUser.trangThai == paramFilterData.trangThai
+                    bUser.pizzaType == paramFilterData.pizzaType && bUser.trangThai == paramFilterData.trangThai
                 ));
-            } else if (paramFilterData.loaiPizza != 0) {
-                vResultArr = gOrderData.filter(bUser => bUser.loaiPizza == paramFilterData.loaiPizza);
+            } else if (paramFilterData.pizzaType != 0) {
+                vResultArr = gOrderData.filter(bUser => bUser.pizzaType == paramFilterData.pizzaType);
             } else if (paramFilterData.trangThai != 0) {
                 vResultArr = gOrderData.filter(bUser => bUser.trangThai == paramFilterData.trangThai);
             }
@@ -972,15 +1079,15 @@
         function loadDataToModal(paramOrderObject) {
             "use strict"
             $("#inp-order-id").val(paramOrderObject.orderCode);
-            $("#inp-kich-co-combo").val(paramOrderObject.kichCo);
+            $("#inp-kich-co-combo").val(paramOrderObject.pizzaSize);
             $("#inp-duong-kinh-pizza").val(paramOrderObject.duongKinh);
             $("#inp-suon").val(paramOrderObject.suon);
             $("#inp-salad").val(paramOrderObject.salad);
-            $("#inp-loai-pizza").val(paramOrderObject.loaiPizza);
+            $("#inp-loai-pizza").val(paramOrderObject.pizzaType);
             $("#inp-id-vourcher").val(paramOrderObject.idVourcher);
             $("#inp-thanh-tien").val(paramOrderObject.thanhTien);
             $("#inp-giam-gia").val(paramOrderObject.giamGia);
-            $("#inp-id-loai-nuoc-uong").val(paramOrderObject.idLoaiNuocUong);
+            $("#inp-id-loai-nuoc-uong").val(paramOrderObject.drink);
             $("#inp-so-luong-nuoc").val(paramOrderObject.soLuongNuoc);
             $("#inp-ho-ten").val(paramOrderObject.hoTen);
             $("#inp-email").val(paramOrderObject.email);
@@ -1021,15 +1128,15 @@
             "use strict"
             return {
                 orderCode: $("#inp-order-id").val().trim(),
-                kichCo: $("#inp-kich-co-combo").val().trim(),
+                pizzaSize: $("#inp-kich-co-combo").val().trim(),
                 duongKinh: $("#inp-duong-kinh-pizza").val().trim(),
                 suon: $("#inp-suon").val().trim(),
                 salad: $("#inp-salad").val().trim(),
-                loaiPizza: $("#inp-loai-pizza").val().trim(),
+                pizzaType: $("#inp-loai-pizza").val().trim(),
                 idVourcher: $("#inp-id-vourcher").val().trim(),
                 thanhTien: $("#inp-thanh-tien").val().trim(),
                 giamGia: $("#inp-giam-gia").val().trim(),
-                idLoaiNuocUong: $("#inp-id-loai-nuoc-uong").val().trim(),
+                drink: $("#inp-id-loai-nuoc-uong").val().trim(),
                 soLuongNuoc: $("#inp-so-luong-nuoc").val().trim(),
                 hoTen: $("#inp-ho-ten").val().trim(),
                 email: $("#inp-email").val().trim(),
@@ -1066,15 +1173,15 @@
         //Valid Data
         function validDataModal(paramThongTinGuiDon) {
             'use strict'
-            if (paramThongTinGuiDon.kichCo == "0") {
+            if (paramThongTinGuiDon.pizzaSize == "0") {
                 alert("Bạn chưa chọn Combo");
                 return false
             }
-            if (paramThongTinGuiDon.loaiPizza == "0") {
+            if (paramThongTinGuiDon.pizzaType == "0") {
                 alert("Bạn chưa chọn Kiểu Pizza");
                 return false
             }
-            if (paramThongTinGuiDon.idLoaiNuocUong == "0") {
+            if (paramThongTinGuiDon.drink == "0") {
                 alert("Bạn chưa chọn Loại Nước Ngọt");
                 return false
             }
@@ -1192,28 +1299,28 @@
             });
         }
 
-        //Convert value to Pizza text
-        function convertToPizzaText(paramData) {
-            var vPizzaText = "";
-            for (let index = 0; index < gPizzaType.length; index++) {
-                if (paramData == gPizzaType[index].value) {
-                    vPizzaText = gPizzaType[index].text
-                }
-            }
-            return vPizzaText;
-        }
+        // //Convert value to Pizza text
+        // function convertToPizzaText(paramData) {
+        //     var vPizzaText = "";
+        //     for (let index = 0; index < gPizzaType.length; index++) {
+        //         if (paramData == gPizzaType[index].value) {
+        //             vPizzaText = gPizzaType[index].text
+        //         }
+        //     }
+        //     return vPizzaText;
+        // }
 
         // Hàm lấy thông tin từ trường input
         function getNewOrderData(paramObject) {
-            paramObject.kichCo = $('#sel-kich-co option:selected').val();
+            paramObject.pizzaSize = $('#sel-kich-co option:selected').val();
             paramObject.duongKinh = $('#input-duong-kinh').val();
             paramObject.suon = $('#input-suon').val();
             paramObject.salad = $('#input-salad').val();
             paramObject.soLuongNuoc = $('#input-so-luong-nuoc').val();
             paramObject.thanhTien = $('#input-thanh-tien').val();
-            paramObject.loaiPizza = $('#sel-loai-pizza option:selected').val();
+            paramObject.pizzaType = $('#sel-loai-pizza option:selected').val();
             paramObject.idVourcher = $('#input-id-vourcher').val();
-            paramObject.idLoaiNuocUong = $('#select-drink option:selected').val();
+            paramObject.drink = $('#select-drink option:selected').val();
             paramObject.hoTen = $('#input-ho-ten').val();
             paramObject.email = $('#input-email').val();
             paramObject.soDienThoai = $('#input-so-dien-thoai').val();
