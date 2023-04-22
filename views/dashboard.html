@@ -540,7 +540,7 @@
                                             <label class="col-form-label">Mã voucher</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="number" class="form-control" id="input-id-vourcher"
+                                            <input type="text" class="form-control" id="input-id-vourcher"
                                                 placeholder="Voucher ID (mã voucher).....">
                                         </div>
                                     </div>
@@ -669,7 +669,6 @@
                     <th>Nước uống</th>
                     <th>Họ và tên</th>
                     <th>Số điện thoại</th>
-                    <th>Email</th>
                     <th>Trạng thái</th>
                     <th>Chi tiết</th>
                 </tr>
@@ -692,16 +691,15 @@
         'use strict';
         /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
         // Biến toàn cục định nghĩa chỉ số các cột tương ứng
-        const gNAME_COL = ["orderCode", "pizzaSize", "pizzaType", "drink", "fullName","phone", "status"]
+        const gNAME_COL = ["orderCode", "pizzaSize", "pizzaType", "drink", "user.fullName","user.phone", "status"]
         const gORDER_CODE_COL = 0;
         const gKICH_CO_COL = 1;
         const gLOAI_PIZZA_COL = 2;
         const gNUOC_UONG_COL = 3;
-        const gVOUCHER_COL = 4;
-        const gHO_VA_TEN_COL = 5;
-        const gSO_DIEN_THOAI_COL = 6;
-        const gTRANG_THAI_COL = 7;
-        const gCHI_TIET_COL = 8;
+        const gHO_VA_TEN_COL = 4;
+        const gSO_DIEN_THOAI_COL = 5;
+        const gTRANG_THAI_COL = 6;
+        const gCHI_TIET_COL = 7;
         // Gán các hằng số cần dùng gọi sever
         const gBASE_URL = "pizza365/orders";
         var gIdDetail;
@@ -745,8 +743,6 @@
             }, {
                 "data": gNAME_COL[gNUOC_UONG_COL]
             }, {
-                "data": gNAME_COL[gVOUCHER_COL]
-            },{
                 "data": gNAME_COL[gHO_VA_TEN_COL]
             }, {
                 "data": gNAME_COL[gSO_DIEN_THOAI_COL]
@@ -764,8 +760,8 @@
              {
                 "targets": gCHI_TIET_COL,
                 "defaultContent": //"<button class='info-order btn btn-info'>Chi tiết</button>"
-                    `<i class="fas fa-edit btn-edit-order" style="cursor: pointer;" data-toggle="tooltip" title="Edit Employee">&nbsp;</i>
-                     <i class="fas fa-trash-alt btn-delete-order" style="cursor: pointer;" data-toggle="tooltip" title="Delete Employee"></i>`
+                    `<i class="fas fa-edit btn-edit-order" style="cursor: pointer;" data-toggle="tooltip" title="Edit">&nbsp;</i>
+                     <i class="fas fa-trash-alt btn-delete-order" style="cursor: pointer;" data-toggle="tooltip" title="Delete"></i>`
             }]
         })
 
@@ -823,7 +819,7 @@
             //Ghi dữ liệu hàng ra console
             debugger
             console.log(vOrderData);
-            gIdDelete = vOrderData.id;
+            gIdDelete = vOrderData._id;
             gOrderCodeDetail = vOrderData.orderCode;
             $('#modal-delete-order').modal()
         }
@@ -906,14 +902,14 @@
             var vOrderData = vDataTableRow.data();
             //Ghi dữ liệu hàng ra console
             console.log(vOrderData);
-            gIdDetail = vOrderData.id;
+            gIdDetail = vOrderData._id;
             gOrderCodeDetail = vOrderData.orderCode;
             console.log({
                 gIdDetail,
                 gOrderCodeDetail
             });
             //Get Data from  API
-            getOrderById(gOrderCodeDetail);
+            getOrderById(gIdDetail);
         }
 
         //Hàm khi loading
@@ -1084,7 +1080,7 @@
             $("#inp-suon").val(paramOrderObject.suon);
             $("#inp-salad").val(paramOrderObject.salad);
             $("#inp-loai-pizza").val(paramOrderObject.pizzaType);
-            $("#inp-id-vourcher").val(paramOrderObject.idVourcher);
+            $("#inp-id-vourcher").val(paramOrderObject._idVourcher);
             $("#inp-thanh-tien").val(paramOrderObject.thanhTien);
             $("#inp-giam-gia").val(paramOrderObject.giamGia);
             $("#inp-id-loai-nuoc-uong").val(paramOrderObject.drink);
@@ -1319,7 +1315,7 @@
             paramObject.soLuongNuoc = $('#input-so-luong-nuoc').val();
             paramObject.thanhTien = $('#input-thanh-tien').val();
             paramObject.pizzaType = $('#sel-loai-pizza option:selected').val();
-            paramObject.idVourcher = $('#input-id-vourcher').val();
+            paramObject._idVourcher = $('#input-id-vourcher').val();
             paramObject.drink = $('#select-drink option:selected').val();
             paramObject.hoTen = $('#input-ho-ten').val();
             paramObject.email = $('#input-email').val();

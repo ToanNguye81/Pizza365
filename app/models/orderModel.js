@@ -10,6 +10,10 @@ const Schema = mongoose.Schema
 const orderSchema = new Schema({
     _id: {
         type: mongoose.Types.ObjectId,
+        unique:true
+    },
+    user: {
+        type: mongoose.Types.ObjectId,
         ref: "User"
     },
     orderCode: {
@@ -24,6 +28,10 @@ const orderSchema = new Schema({
         required: true,
     },
     pizzaType: {
+        type: String,
+        required: true
+    },
+    loiNhan: {
         type: String,
         required: true
     },

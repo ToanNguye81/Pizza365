@@ -12,42 +12,40 @@ const getAllOrder = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     // B2: Validate dữ liệu
     // B3: Gọi Model tạo dữ liệu
-    orderModel.find((error, data) => {
-            if (error) {
-                return response.status(500).json({
-                    status: "Internal server error",
-                    message: error.message
-                })
-            }
+    orderModel.find()
+    .populate('user')
+    .exec((error, data) => {
+        if (error) {
+            return response.status(500).json({
+                status: "Error 500: Internal server error",
+                message: error.message
+            })
+        } else {
             return response.status(200).json({
-                status: "Get all Order successfully",
+                status: "Success: Get Sort asc USer success",
                 data: data
             })
-        })
+        }
+    });
+    
+    // orderModel.find((error, data) => {
+    //     if (error) {
+    //         return response.status(500).json({
+    //             status: "Internal server error",
+    //             message: error.message
+    //         })
+    //     }
+    //     return response.status(200).json({
+    //         status: "Get all Order successfully",
+    //         data: data
+    //     })
+    // })
 }
 
 const createOrder = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const { fullName, email, address, phone, pizzaSize, drink, pizzaType, voucher } = request.body;
-    const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink"]
-    console.log(request.body)
-// fullName
-// email
-// address
-// loiNhan
-// phone
-// pizzaSize
-// duongKinh
-// salad
-// soLuongNuoc
-// suon
-// drink
-// pizzaType
-// voucher
-// giaVND
-// giamGia
-// thanhTien
-//     console.log(body)
+    const { fullName, email, address, phone, pizzaSize, drink, pizzaType,loiNhan, voucher } = request.body;
+    const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink","loiNhan"]
 
     // Check isEmpty in input fields 
     for (const field of fields) {
@@ -65,78 +63,87 @@ const createOrder = (request, response) => {
         pizzaSize,
         pizzaType,
         voucher,
+        loiNhan,
         drink,
-        status: "Open"
+        status: "Open",
     }
     const newUser = { fullName, email, address, phone }
-
-
-    console.log("newUser", newUser)
-    console.log("newOrder", newOrder)
 
     const condition = { email: email };
     userModel
         .findOne(condition)
         .exec((error, existUser) => {
             if (error) {
-                console.log("Lỗi kiểm tra user")
                 return response.status(500).json({
                     status: "Internal server error find ExistUser ",
                     message: error.message
                 })
             } else {
                 if (!existUser) {
-                    console.log("!existUser")
                     // Nếu User không tồn tại
                     userModel.create(newUser, (errCreateUser, createdUser) => {
                         if (errCreateUser) {
-                            console.log(errCreateUser.message)
                             return response.status(500).json({
                                 status: "Internal server error: errCreateUser",
                                 message: errCreateUser.message
-                            })
+                            });
                         } else {
+                            newOrder.user=createdUser._id
                             orderModel.create(newOrder, (errCreateOrder, createdOrder) => {
                                 if (errCreateOrder) {
-                                    console.log("errCreateOrder")
                                     return response.status(500).json({
                                         status: "Internal server error: errCreateUser",
                                         message: errCreateUser.message
-                                    })
+                                    });
                                 } else {
-                                    createdUser.orders.push(createdOrder._id)
-                                    return response.status(201).json({
-                                        status: "Create Drink successfully",
-                                        order: createdOrder,
-                                        user: createdUser,
-                                        orderCode: createdOrder.orderCode,
-                                    })
+                                    createdUser.orders.push(createdOrder._id);
+                                    createdUser.save((err) => {
+                                        if (err) {
+                                            return response.status(500).json({
+                                                status: "Internal server error updating createdUser",
+                                                message: err.message
+                                            });
+                                        } else {
+                                            return response.status(201).json({
+                                                status: "Create Drink successfully",
+                                                order: createdOrder,
+                                                user: createdUser,
+                                                orderCode: createdOrder.orderCode,
+                                            });
+                                        }
+                                    });
                                 }
-                            })
+                            });
                         }
-                    })
+                    });
                 } else {
                     //Nếu user đã tồn tại
+                    newOrder.user=existUser._id
                     orderModel.create(newOrder, (errCreateOrder, createdOrder) => {
                         if (errCreateOrder) {
-                            console.log(errCreateOrder.message)
                             return response.status(500).json({
                                 status: "Internal server error errCreateOrder- ExistUser",
                                 message: errCreateOrder.message
-                            })
+                            });
                         } else {
-                            console.log(createdOrder.orderCode)
-                            console.log(createdOrder._id)
-                            existUser.orders.push(createdOrder._id)
-                            return response.status(201).json({
-                                status: "Create order Success",
-                                order: createdOrder,
-                                user: existUser,
-                                orderCode: createdOrder.orderCode,
-                            })
+                            existUser.orders.push(createdOrder._id);
+                            existUser.save((err) => {
+                                if (err) {
+                                    return response.status(500).json({
+                                        status: "Internal server error updating existUser",
+                                        message: err.message
+                                    });
+                                } else {
+                                    return response.status(201).json({
+                                        status: "Create order Success",
+                                        order: createdOrder,
+                                        user: existUser,
+                                        orderCode: createdOrder.orderCode,
+                                    });
+                                }
+                            });
                         }
-                    })
-
+                    });
                 }
             }
 
@@ -156,7 +163,10 @@ const getOrderById = (request, response) => {
     }
 
     // B3: Gọi Model tạo dữ liệu
-    orderModel.findById(orderId, (error, data) => {
+    orderModel.
+    findById(orderId)
+    .populate('user')
+    .exec((error, data) => {
         if (error) {
             return response.status(500).json({
                 status: "Internal server error",
