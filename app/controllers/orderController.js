@@ -13,21 +13,21 @@ const getAllOrder = (request, response) => {
     // B2: Validate dữ liệu
     // B3: Gọi Model tạo dữ liệu
     orderModel.find()
-    .populate('user')
-    .exec((error, data) => {
-        if (error) {
-            return response.status(500).json({
-                status: "Error 500: Internal server error",
-                message: error.message
-            })
-        } else {
-            return response.status(200).json({
-                status: "Success: Get Sort asc USer success",
-                data: data
-            })
-        }
-    });
-    
+        .populate('user')
+        .exec((error, data) => {
+            if (error) {
+                return response.status(500).json({
+                    status: "Error 500: Internal server error",
+                    message: error.message
+                })
+            } else {
+                return response.status(200).json({
+                    status: "Success: Get Sort asc USer success",
+                    data: data
+                })
+            }
+        });
+
     // orderModel.find((error, data) => {
     //     if (error) {
     //         return response.status(500).json({
@@ -44,12 +44,14 @@ const getAllOrder = (request, response) => {
 
 const createOrder = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const { fullName, email, address, phone, pizzaSize, drink, pizzaType,loiNhan, voucher } = request.body;
-    const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink","loiNhan"]
+    const { fullName, email, address, phone, pizzaSize, drink, pizzaType, loiNhan, voucher, duongKinh, suon, salad, soLuongNuoc, thanhTien } = request.body;
+    const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink"]
 
+    console.log({ fullName, email, address, phone, pizzaSize, drink, pizzaType, loiNhan, voucher, duongKinh, suon, salad, soLuongNuoc, thanhTien })
     // Check isEmpty in input fields 
     for (const field of fields) {
         if (!request.body[field]) {
+            console.log(field)
             return response.status(400).json({
                 status: `Bad Request ${field}`,
                 message: `${field} is required`
@@ -60,12 +62,8 @@ const createOrder = (request, response) => {
     // B3: Gọi Model tạo dữ liệu user và order
     const newOrder = {
         _id: mongoose.Types.ObjectId(),
-        pizzaSize,
-        pizzaType,
-        voucher,
-        loiNhan,
-        drink,
-        status: "Open",
+        pizzaSize, pizzaType, voucher, loiNhan,
+        drink, duongKinh, suon, salad, soLuongNuoc, thanhTien, status:"Open"
     }
     const newUser = { fullName, email, address, phone }
 
@@ -88,7 +86,7 @@ const createOrder = (request, response) => {
                                 message: errCreateUser.message
                             });
                         } else {
-                            newOrder.user=createdUser._id
+                            newOrder.user = createdUser._id
                             orderModel.create(newOrder, (errCreateOrder, createdOrder) => {
                                 if (errCreateOrder) {
                                     return response.status(500).json({
@@ -118,7 +116,7 @@ const createOrder = (request, response) => {
                     });
                 } else {
                     //Nếu user đã tồn tại
-                    newOrder.user=existUser._id
+                    newOrder.user = existUser._id
                     orderModel.create(newOrder, (errCreateOrder, createdOrder) => {
                         if (errCreateOrder) {
                             return response.status(500).json({
@@ -164,21 +162,21 @@ const getOrderById = (request, response) => {
 
     // B3: Gọi Model tạo dữ liệu
     orderModel.
-    findById(orderId)
-    .populate('user')
-    .exec((error, data) => {
-        if (error) {
-            return response.status(500).json({
-                status: "Internal server error",
-                message: error.message
-            })
-        }
+        findById(orderId)
+        .populate('user')
+        .exec((error, data) => {
+            if (error) {
+                return response.status(500).json({
+                    status: "Internal server error",
+                    message: error.message
+                })
+            }
 
-        return response.status(200).json({
-            status: "Get detail Order successfully",
-            data: data
+            return response.status(200).json({
+                status: "Get detail Order successfully",
+                data: data
+            })
         })
-    })
 }
 
 const updateOrderById = (request, response) => {

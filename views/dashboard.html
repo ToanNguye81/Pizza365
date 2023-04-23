@@ -21,59 +21,38 @@
 
 <body>
     <div class="container-fluid bg-light p-2 m-2">
-        <div class="container-fluid mb-5">
-            <!-- Modal Detail -->
-            <div id="modal-order-detail" class="modal fade" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Thông tin đơn hàng</h5>
-                            <button type="button" class="cancel" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="bg-light p-4 mb-2">
-                                <div>
-                                    <label class="col-form-label pl-1" for="">Họ và tên</label>
-                                    <input type="text" id="input-modal-ho-ten" class="form-control" placeholder="Họ và tên...">
-                                </div>
-    
-                                <div>
-                                    <label class="col-form-label pl-1">Số điện thoại</label>
-                                    <input type="text" id="input-modal-so-dien-thoai" class="form-control" placeholder="Địa chỉ...">
-                                </div>
-    
-                                <div>
-                                    <label class="col-form-label pl-1">Địa chỉ</label>
-                                    <input type="text" id="input-modal-dia-chi" class="form-control" placeholder="Địa chỉ...">
-                                </div>
-    
-                                <div>
-                                    <label class="col-form-label pl-1">Lời nhắn</label>
-                                    <input type="text" id="input-modal-loi-nhan" class="form-control" placeholder="Lời nhắn...">
-                                </div>
-    
-                                <div>
-                                    <label class="col-form-label pl-1">Mã giảm giá</label>
-                                    <input type="text" id="input-modal-ma-giam-gia" class="form-control" placeholder="Mã giảm giá...">
-                                </div>
-    
-                                <div>
-                                    <label class="col-form-label pl-1">Thông tin chi tiết</label><br>
-                                    <textarea id="textarea-thong-tin-chi-tiet" class="container-fluid" rows="10"></textarea>
-                                </div>
-    
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" id="btn-quay-lai" class="btn btn-danger col-sm-2" data-dismiss="modal">Quay lại</button>
-                            <button type="button" id="btn-tao-don" class="btn btn-warning col-sm-2">Tạo đơn</button>
-                        </div>
+        <!-- Nav bar -->
+        <div class="row">
+            <div class="col-sm-12">
+                <nav class="navbar fixed-top navbar-light bg-warning navbar-expand-lg">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav nav-fill w-100">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Trang Chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#combo">Combo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#pizzaType">Loại pizza</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#order">Gửi đơn hàng </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/dashboard">Bảng điều hiển </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
+                </nav>
             </div>
-    
-    
-            <!-- vùng hiển thị thông tin đơn hàng(order) -->
+        </div>
+        <div class="container-fluid mb-5">
+            <!-- vùng hiển thị thông tin đơn hàng (order) sau khi order thành công -->
             <div id="modal-ma-don-hang" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content bg-warning">
@@ -90,43 +69,17 @@
                                     <input type="text" class="form-control" id="inp-order-code"> </input>
                                 </div>
                                 <div class="col-sm-12 text-right">
-                                    <button id="btn-ok" class="btn btn-success col-sm-5" type="reset" data-dismiss="modal">OK</button>
+                                    <button id="btn-ok" class="btn btn-success col-sm-5" type="reset"
+                                        data-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-    
-            <!-- Navvbar -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <nav class="navbar fixed-top navbar-light bg-warning navbar-expand-lg">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav nav-fill w-100">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/">Trang Chủ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/#combo">Combo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/#pizzaType">Loại pizza</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/#order">Gửi đơn hàng  </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/dashboard">Bảng điều hiển  </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
+
+
+
         </div>
         <div class="jumbotron container-fluid p-1 m-0">
             <div class="mb-1">
@@ -153,15 +106,15 @@
             </div>
         </div>
         <div class="row m-1">
-            <button id="btn-add-order" class="btn btn-warning"> Add order</button>
+            <button id="btn-add-order" class="btn btn-success"> Add order</button>
         </div>
 
-        <!-- Modal Detail -->
-        <div id="modal-order-detail" class="modal fade" tabindex="-1">
+        <!-- Modal Edit Update Order -->
+        <div id="modal-update-order" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Order Detail!!!</h5>
+                        <h5 class="modal-title">Edit - Update Order</h5>
                         <button type="button" class="cancel" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -173,7 +126,7 @@
                                             <label for="" class="col-form-label">orderCode (Mã đơn hàng) </label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-order-id" disabled
+                                            <input type="text" class="form-control" id="inp-update-order-code" disabled
                                                 placeholder="Mã đơn hàng....">
                                         </div>
                                     </div>
@@ -184,8 +137,8 @@
                                             <label for="" class="col-form-label">Kích cỡ Combo</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-kich-co-combo" disabled
-                                                placeholder="Kích cỡ Combo...">
+                                            <input type="text" class="form-control" id="inp-update-kich-co-combo"
+                                                disabled placeholder="Kích cỡ Combo..." />
                                         </div>
                                     </div>
                                 </div>
@@ -198,8 +151,8 @@
                                             <label class="col-form-label">Đường kính Pizza</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-duong-kinh-pizza" disabled
-                                                placeholder="Đường kính Pizza....">
+                                            <input type="text" class="form-control" id="inp-update-duong-kinh-pizza"
+                                                disabled placeholder="Đường kính Pizza....">
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +162,7 @@
                                             <label class="col-form-label">Sườn nướng (miếng)</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-suon" disabled
+                                            <input type="text" class="form-control" id="inp-update-suon" disabled
                                                 placeholder="Sườn nướng (miếng)....">
                                         </div>
                                     </div>
@@ -223,7 +176,7 @@
                                             <label class="col-form-label">Salad</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-salad" disabled
+                                            <input type="text" class="form-control" id="inp-update-salad" disabled
                                                 placeholder="Salad....">
                                         </div>
                                     </div>
@@ -234,7 +187,7 @@
                                             <label class="col-form-label">Loại Pizza</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-loai-pizza" disabled
+                                            <input type="text" class="form-control" id="inp-update-loai-pizza" disabled
                                                 placeholder="Loại Pizza....">
                                         </div>
                                     </div>
@@ -248,7 +201,7 @@
                                             <label class="col-form-label">Mã voucher</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-id-vourcher" disabled
+                                            <input type="text" class="form-control" id="inp-update-id-vourcher" disabled
                                                 placeholder="Voucher ID (mã voucher).....">
                                         </div>
                                     </div>
@@ -259,7 +212,7 @@
                                             <label class="col-form-label">Thành tiền</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-thanh-tien" disabled
+                                            <input type="text" class="form-control" id="inp-update-thanh-tien" disabled
                                                 placeholder="Thành tiền....">
                                         </div>
                                     </div>
@@ -273,7 +226,7 @@
                                             <label class="col-form-label">Giảm giá</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inp-giam-gia" disabled
+                                            <input type="text" class="form-control" id="inp-update-giam-gia" disabled
                                                 placeholder="Giảm giá.....">
                                         </div>
                                     </div>
@@ -284,7 +237,7 @@
                                             <label class="col-form-label" for="">id Loại nước uống</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-id-loai-nuoc-uong" class="form-control"
+                                            <input type="text" id="inp-update-id-loai-nuoc-uong" class="form-control"
                                                 placeholder="id Loại nước uống..." disabled>
                                         </div>
                                     </div>
@@ -298,8 +251,8 @@
                                             <label for="" class="col-form-label">Số lượng nước</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-so-luong-nuoc" class="form-control" disabled
-                                                placeholder="Số lượng đồ uống....">
+                                            <input type="text" id="inp-update-so-luong-nuoc" class="form-control"
+                                                disabled placeholder="Số lượng đồ uống....">
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +262,7 @@
                                             <label class="col-form-label" for="">Họ tên</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-ho-ten" class="form-control" disabled
+                                            <input type="text" id="inp-update-ho-ten" class="form-control" disabled
                                                 placeholder="Họ và tên...">
                                         </div>
                                     </div>
@@ -323,7 +276,7 @@
                                             <label for="" class="col-form-label">Email</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input id="inp-email" type="email" class="form-control" disabled
+                                            <input id="inp-update-email" type="email" class="form-control" disabled
                                                 placeholder="Email...">
                                         </div>
                                     </div>
@@ -334,8 +287,8 @@
                                             <label class="col-form-label">Số điện thoại</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-so-dien-thoai" class="form-control" disabled
-                                                placeholder="Số điện thoại...">
+                                            <input type="text" id="inp-update-so-dien-thoai" class="form-control"
+                                                disabled placeholder="Số điện thoại...">
                                         </div>
                                     </div>
                                 </div>
@@ -348,7 +301,7 @@
                                             <label class="col-form-label">Địa chỉ</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-dia-chi" class="form-control" disabled
+                                            <input type="text" id="inp-update-dia-chi" class="form-control" disabled
                                                 placeholder="Địa chỉ...">
                                         </div>
                                     </div>
@@ -359,7 +312,7 @@
                                             <label class="col-form-label">Lời nhắn</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-loi-nhan" class="form-control" disabled
+                                            <input type="text" id="inp-update-loi-nhan" class="form-control" disabled
                                                 placeholder="Lời nhắn...">
                                         </div>
                                     </div>
@@ -373,7 +326,7 @@
                                             <label class="col-form-label">Trạng thái</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-trang-thai" class="form-control" disabled
+                                            <input type="text" id="inp-update-trang-thai" class="form-control" disabled
                                                 placeholder="Trạng thái...">
                                         </div>
                                     </div>
@@ -384,7 +337,7 @@
                                             <label class="col-form-label">Ngày tạo</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-ngay-tao" class="form-control" disabled
+                                            <input type="text" id="inp-update-ngay-tao" class="form-control" disabled
                                                 placeholder="Ngày tạo...">
                                         </div>
                                     </div>
@@ -398,8 +351,8 @@
                                             <label class="col-form-label">Ngày cập nhật</label>
                                         </div>
                                         <div class="col-sm-8">
-                                            <input type="text" id="inp-ngay-cap-nhat" class="form-control" disabled
-                                                placeholder="Ngày cập nhật...">
+                                            <input type="text" id="inp-update-ngay-cap-nhat" class="form-control"
+                                                disabled placeholder="Ngày cập nhật...">
                                         </div>
                                     </div>
                                 </div>
@@ -414,12 +367,12 @@
             </div>
         </div>
 
-        <!-- Modal add-order -->
-        <div id="modal-add-order" class="modal fade" tabindex="-1">
+        <!-- Modal create order -->
+        <div id="modal-create-order" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Order Detail!!!</h5>
+                        <h5 class="modal-title">Create Order</h5>
                         <button type="button" class="cancel" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -603,8 +556,8 @@
                                         <div class="col-sm-8">
                                             <select id="select-trang-thai" class="form-control">
                                                 <option value="open">Open</option>
-                                                <option value="confirmed">Đã hủy</option>
-                                                <option value="cancel">Đã xác nhận</option>
+                                                <option value="cancel">Đã hủy</option>
+                                                <option value="confirmed">Đã xác nhận</option>
                                             </select>
                                         </div>
                                     </div>
@@ -640,7 +593,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Cảnh báo xóa order!!!</h3>
+                        <h3 class="modal-title">Cảnh báo xóa order</h3>
                         <button type="button" class="cancel" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -691,7 +644,7 @@
         'use strict';
         /*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
         // Biến toàn cục định nghĩa chỉ số các cột tương ứng
-        const gNAME_COL = ["orderCode", "pizzaSize", "pizzaType", "drink", "user.fullName","user.phone", "status"]
+        const gNAME_COL = ["orderCode", "pizzaSize", "pizzaType", "drink", "user.fullName", "user.phone", "status"]
         const gORDER_CODE_COL = 0;
         const gKICH_CO_COL = 1;
         const gLOAI_PIZZA_COL = 2;
@@ -748,21 +701,21 @@
                 "data": gNAME_COL[gSO_DIEN_THOAI_COL]
             }, {
                 "data": gNAME_COL[gTRANG_THAI_COL]
-            }, 
+            },
             {
                 "data": gNAME_COL[gCHI_TIET_COL]
             }],
             "columnDefs": [
-            //     {
-            //     "targets": gLOAI_PIZZA_COL,
-            //     "render": convertToPizzaText
-            // },
-             {
-                "targets": gCHI_TIET_COL,
-                "defaultContent": //"<button class='info-order btn btn-info'>Chi tiết</button>"
-                    `<i class="fas fa-edit btn-edit-order" style="cursor: pointer;" data-toggle="tooltip" title="Edit">&nbsp;</i>
+                //     {
+                //     "targets": gLOAI_PIZZA_COL,
+                //     "render": convertToPizzaText
+                // },
+                {
+                    "targets": gCHI_TIET_COL,
+                    "defaultContent": //"<button class='info-order btn btn-info'>Chi tiết</button>"
+                        `<i class="fas fa-edit btn-edit-order" style="cursor: pointer;" data-toggle="tooltip" title="Edit">&nbsp;</i>
                      <i class="fas fa-trash-alt btn-delete-order" style="cursor: pointer;" data-toggle="tooltip" title="Delete"></i>`
-            }]
+                }]
         })
 
         /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
@@ -843,7 +796,7 @@
         //Hàm thực thi khi nhấn add order
         function onBtnAddOrderClick() {
             //Hiện modal lên
-            $('#modal-add-order').modal()
+            $('#modal-create-order').modal()
         }
 
         //Hàm thực hiện khi nhấn confirm
@@ -854,22 +807,13 @@
                 gIdDetail,
                 gOrderCodeDetail
             });
-            // đọc
-            var vDataModal = getDataModal();
-            //gọi server update
+            //gọi server update status
             updateOrderClick(gIdDetail, "confirmed");
         }
 
         //Hàm thực hiện khi nhấn cancer
         function onBtnCancelClick() {
             "use strict"
-            console.log("Nút cancel được nhấn");
-            console.log({
-                gIdDetail,
-                gOrderCodeDetail
-            });
-            // đọc
-            var vDataModal = getDataModal();
             //gọi server update
             updateOrderClick(gIdDetail, "cancel");
         }
@@ -877,11 +821,10 @@
         // Hàm khi bấm nút filter
         function onBtnFilterClick() {
             "use strict"
-
             // Thu thập dữ liệu
             var vFilterData = getDataFromForm();
             // Kiểm tra dữ liệu
-            if (vFilterData.pizzaType == "0" && vFilterData.trangThai == "0") {
+            if (vFilterData.pizzaType == "0" && vFilterData.status == "0") {
                 onPageLoading();
                 return;
             }
@@ -901,7 +844,6 @@
             //Lấy data của dòng 
             var vOrderData = vDataTableRow.data();
             //Ghi dữ liệu hàng ra console
-            console.log(vOrderData);
             gIdDetail = vOrderData._id;
             gOrderCodeDetail = vOrderData.orderCode;
             console.log({
@@ -923,7 +865,7 @@
         function loadStatusToSelect(paramData) {
             "use strict";
             $('#sel-trang-thai').append($('<option>', {
-                value: 0,
+                value: "",
                 text: '== Chọn trạng thái =='
             }));
             for (var bI = 0; bI < paramData.length; bI++) {
@@ -940,7 +882,7 @@
             //Xóa toàn bộ dữ liệu đang có của bảng
             gOrderTable.clear();
             //Cập nhật data cho bảng 
-            gOrderTable.rows.add(paramResponseObject.data);
+            gOrderTable.rows.add(paramResponseObject);
             //Cập nhật lại giao diện hiển thị bảng
             gOrderTable.draw();
         }
@@ -950,38 +892,18 @@
             "use strict"
             return {
                 pizzaType: $('#sel-pizza-type').val(),
-                trangThai: $('#sel-trang-thai').val()
+                status: $('#sel-trang-thai').val()
             }
         }
 
         //Hàm lọc dữ liệu
         function handleFilter(paramFilterData) {
-            "use strict"
-            var vResultArr = gOrderData;
-            if (paramFilterData.pizzaType != 0 && paramFilterData.trangThai != 0) {
-                vResultArr = gOrderData.filter(bUser => (
-                    bUser.pizzaType == paramFilterData.pizzaType && bUser.trangThai == paramFilterData.trangThai
-                ));
-            } else if (paramFilterData.pizzaType != 0) {
-                vResultArr = gOrderData.filter(bUser => bUser.pizzaType == paramFilterData.pizzaType);
-            } else if (paramFilterData.trangThai != 0) {
-                vResultArr = gOrderData.filter(bUser => bUser.trangThai == paramFilterData.trangThai);
-            }
-            // Hiển thị result grade data vào table
-            loadDataToTable(vResultArr);
-
-            "use strict"
-            var vResultArr = gOrderData;
-            if (paramFilterData.pizzaType != 0 && paramFilterData.trangThai != 0) {
-                vResultArr = gOrderData.filter(bUser => (
-                    bUser.pizzaType == paramFilterData.pizzaType && bUser.trangThai == paramFilterData.trangThai
-                ));
-            } else if (paramFilterData.pizzaType != 0) {
-                vResultArr = gOrderData.filter(bUser => bUser.pizzaType == paramFilterData.pizzaType);
-            } else if (paramFilterData.trangThai != 0) {
-                vResultArr = gOrderData.filter(bUser => bUser.trangThai == paramFilterData.trangThai);
-            }
-            // Hiển thị result grade data vào table
+            const { pizzaType, status } = paramFilterData;
+            console.log({ pizzaType, status })
+            const vResultArr = gOrderData.filter(order => (
+                (!pizzaType || order.pizzaType && order.pizzaType.toLowerCase() === pizzaType.toLowerCase()) &&
+                (!status || order.status && order.status.toLowerCase() === status.toLowerCase())
+            ));
             loadDataToTable(vResultArr);
         }
 
@@ -989,7 +911,7 @@
         function loadPizzaTypesToSelect(paramData) {
             "use strict";
             $('#sel-pizza-type').append($('<option>', {
-                value: 0,
+                value: "",
                 text: '== Chọn loại Pizza =='
             }));
             for (var bI = 0; bI < paramData.length; bI++) {
@@ -1011,11 +933,11 @@
                 dataType: 'json',
                 success: function (responseObject) {
                     //Lưu vào biến toàn cục 
-                    var vOrderData = responseObject;
+                    var vOrderData = responseObject.data;
                     //Load data to modal
-                    loadDataToModal(vOrderData);
+                    loadDataToDetailModal(vOrderData);
                     //Hiện modal lên
-                    $('#modal-order-detail').modal()
+                    $('#modal-update-order').modal()
                 },
                 error: function (error) {
                     console.assert(error.responseText);
@@ -1033,7 +955,7 @@
                 dataType: 'json',
                 success: function (responseObject) {
                     //Lưu vào biến toàn cục 
-                    gOrderData = responseObject;
+                    gOrderData = responseObject.data;
                     //task in ra console
                     console.log(gOrderData);
                     //load dữ liệu vào bảng
@@ -1053,15 +975,14 @@
                 url: gBASE_URL + "/" + paramOrderId,
                 type: 'PUT',
                 data: JSON.stringify({
-                    trangThai: paramStatus
+                    status: paramStatus
                 }),
                 dataType: 'json', // added data type
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {
                     // xử lý data display
-                    alert('Load was performed.');
                     clearModalForm();
-                    $('#modal-order-detail').modal("hide");
+                    $('#modal-update-order').modal("hide");
                     //Trà lại các giá trị cho ô search
                     $('#sel-pizza-type').val("0");
                     $('#sel-trang-thai').val("0");
@@ -1072,33 +993,32 @@
         }
 
         //Load data to modal
-        function loadDataToModal(paramOrderObject) {
-            "use strict"
-            $("#inp-order-id").val(paramOrderObject.orderCode);
-            $("#inp-kich-co-combo").val(paramOrderObject.pizzaSize);
-            $("#inp-duong-kinh-pizza").val(paramOrderObject.duongKinh);
-            $("#inp-suon").val(paramOrderObject.suon);
-            $("#inp-salad").val(paramOrderObject.salad);
-            $("#inp-loai-pizza").val(paramOrderObject.pizzaType);
-            $("#inp-id-vourcher").val(paramOrderObject._idVourcher);
-            $("#inp-thanh-tien").val(paramOrderObject.thanhTien);
-            $("#inp-giam-gia").val(paramOrderObject.giamGia);
-            $("#inp-id-loai-nuoc-uong").val(paramOrderObject.drink);
-            $("#inp-so-luong-nuoc").val(paramOrderObject.soLuongNuoc);
-            $("#inp-ho-ten").val(paramOrderObject.hoTen);
-            $("#inp-email").val(paramOrderObject.email);
-            $("#inp-so-dien-thoai").val(paramOrderObject.soDienThoai);
-            $("#inp-dia-chi").val(paramOrderObject.diaChi);
-            $("#inp-loi-nhan").val(paramOrderObject.loiNhan);
-            $("#inp-trang-thai").val(paramOrderObject.trangThai);
-            $("#inp-ngay-tao").val(paramOrderObject.ngayTao);
-            $("#inp-ngay-cap-nhat").val(paramOrderObject.ngayCapNhat);
+        function loadDataToDetailModal(paramOrderObject) {
+            $("#inp-update-order-code").val(paramOrderObject.orderCode);
+            $("#inp-update-kich-co-combo").val(paramOrderObject.pizzaSize);
+            $("#inp-update-duong-kinh-pizza").val(paramOrderObject.duongKinh);
+            $("#inp-update-suon").val(paramOrderObject.suon);
+            $("#inp-update-salad").val(paramOrderObject.salad);
+            $("#inp-update-loai-pizza").val(paramOrderObject.pizzaType);
+            $("#inp-update-id-vourcher").val(paramOrderObject.voucher);
+            $("#inp-update-thanh-tien").val(paramOrderObject.thanhTien);
+            $("#inp-update-giam-gia").val(paramOrderObject.giamGia);
+            $("#inp-update-id-loai-nuoc-uong").val(paramOrderObject.drink);
+            $("#inp-update-so-luong-nuoc").val(paramOrderObject.soLuongNuoc);
+            $("#inp-update-ho-ten").val(paramOrderObject.user.fullName);
+            $("#inp-update-email").val(paramOrderObject.user.email);
+            $("#inp-update-so-dien-thoai").val(paramOrderObject.user.phone);
+            $("#inp-update-dia-chi").val(paramOrderObject.user.address);
+            $("#inp-update-loi-nhan").val(paramOrderObject.user.loiNhan);
+            $("#inp-update-trang-thai").val(paramOrderObject.status);
+            $("#inp-update-ngay-tao").val(paramOrderObject.createdAt);
+            $("#inp-update-ngay-cap-nhat").val(paramOrderObject.updatedAt);
         }
 
         // Hàm clear create form
         function clearModalForm() {
             "use strict"
-            $("#inp-order-id").val("");
+            $("#inp-order-code").val("");
             $("#inp-kich-co-combo").val("");
             $("#inp-duong-kinh-pizza").val("");
             $("#inp-suon").val("");
@@ -1123,7 +1043,7 @@
         function getDataModal() {
             "use strict"
             return {
-                orderCode: $("#inp-order-id").val().trim(),
+                orderCode: $("#inp-order-code").val().trim(),
                 pizzaSize: $("#inp-kich-co-combo").val().trim(),
                 duongKinh: $("#inp-duong-kinh-pizza").val().trim(),
                 suon: $("#inp-suon").val().trim(),
@@ -1134,12 +1054,12 @@
                 giamGia: $("#inp-giam-gia").val().trim(),
                 drink: $("#inp-id-loai-nuoc-uong").val().trim(),
                 soLuongNuoc: $("#inp-so-luong-nuoc").val().trim(),
-                hoTen: $("#inp-ho-ten").val().trim(),
+                fullName: $("#inp-ho-ten").val().trim(),
                 email: $("#inp-email").val().trim(),
-                soDienThoai: $("#inp-so-dien-thoai").val().trim(),
-                diaChi: $("#inp-dia-chi").val().trim(),
+                phone: $("#inp-so-dien-thoai").val().trim(),
+                address: $("#inp-dia-chi").val().trim(),
                 loiNhan: $("#inp-loi-nhan").val().trim(),
-                trangThai: $("#inp-trang-thai").val().trim(),
+                status: $("#inp-trang-thai").val().trim(),
                 ngayTao: $("#inp-ngay-tao").val().trim(),
                 ngayCapNhat: $("#inp-ngay-cap-nhat").val().trim(),
             }
@@ -1181,11 +1101,11 @@
                 alert("Bạn chưa chọn Loại Nước Ngọt");
                 return false
             }
-            if (paramThongTinGuiDon.hoTen.trim() == "") {
+            if (paramThongTinGuiDon.fullName.trim() == "") {
                 alert("Bạn chưa nhập họ tên");
                 return false
             }
-            if (!isPhoneNumber(paramThongTinGuiDon.soDienThoai)) {
+            if (!isPhoneNumber(paramThongTinGuiDon.phone)) {
                 alert("Số điện thoại không hợp lệ");
                 return false
             }
@@ -1193,11 +1113,11 @@
                 var vEmail = paramThongTinGuiDon.email.trim();
                 return checkEmailFomat(vEmail);
             }
-            if (paramThongTinGuiDon.diaChi.trim() == "") {
+            if (paramThongTinGuiDon.address.trim() == "") {
                 alert("Bạn chưa nhập địa chỉ");
                 return false
             }
-            if (paramThongTinGuiDon.trangThai == "") {
+            if (paramThongTinGuiDon.status == "") {
                 alert("Bạn chưa nhập trạng thái");
                 return false
             }
@@ -1285,10 +1205,10 @@
                 dataType: 'json', // added data type
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {
-                    // xử lý data display
-                    alert('Mã đơn hàng tạo thành công của bạn là: ' + data.orderCode);
                     //Ẩn modal
-                    $('#modal-add-order').modal('hide');
+                    $('#modal-create-order').modal('hide');
+                    $('#inp-order-code').val(data.orderCode)
+                    $('#modal-ma-don-hang').modal()
                     //load lại trang
                     onPageLoading();
                 }
@@ -1315,13 +1235,13 @@
             paramObject.soLuongNuoc = $('#input-so-luong-nuoc').val();
             paramObject.thanhTien = $('#input-thanh-tien').val();
             paramObject.pizzaType = $('#sel-loai-pizza option:selected').val();
-            paramObject._idVourcher = $('#input-id-vourcher').val();
+            paramObject.voucher = $('#input-id-vourcher').val();
             paramObject.drink = $('#select-drink option:selected').val();
-            paramObject.hoTen = $('#input-ho-ten').val();
+            paramObject.fullName = $('#input-ho-ten').val();
             paramObject.email = $('#input-email').val();
-            paramObject.soDienThoai = $('#input-so-dien-thoai').val();
-            paramObject.diaChi = $('#input-dia-chi').val();
-            paramObject.trangThai = $('#select-trang-thai').val();
+            paramObject.phone = $('#input-so-dien-thoai').val();
+            paramObject.address = $('#input-dia-chi').val();
+            paramObject.status = $('#select-trang-thai').val();
             paramObject.loiNhan = $('#input-loi-nhan').val();
             console.log(paramObject)
         };

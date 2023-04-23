@@ -8,10 +8,6 @@ const Schema = mongoose.Schema
 
 //Khởi tạo instance orderSchema 
 const orderSchema = new Schema({
-    _id: {
-        type: mongoose.Types.ObjectId,
-        unique:true
-    },
     user: {
         type: mongoose.Types.ObjectId,
         ref: "User"
@@ -22,10 +18,6 @@ const orderSchema = new Schema({
         default: () => {
             return crypto.randomBytes(64).toString('hex').substr(0, 6);
         }
-    },
-    pizzaSize: {
-        type: String,
-        required: true,
     },
     pizzaType: {
         type: String,
@@ -47,7 +39,31 @@ const orderSchema = new Schema({
         type: String,
         required: true,
         default: "Open"
-    }
+    },
+    pizzaSize: {
+        type: String,
+        require: true
+    },
+    duongKinh: {
+        type: Number,
+        require: true
+    },
+    suon: {
+        type: Number,
+        require: true
+    },
+    salad: {
+        type: Number,
+        require: true
+    },
+    soLuongNuoc: {
+        type: Number,
+        require: true
+    },
+    thanhTien: {
+        type: Number,
+        require: true
+    },
 }, {
     //Lưu dấu bảng ghi được cập nhật vào thời gian nào
     timestamps: true

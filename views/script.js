@@ -224,14 +224,10 @@ function createNewOrder(paramOrderInfo) {
         dataType: 'json', // added data type
         contentType: "application/json;charset=UTF-8",
         success: function(data) {
-            // xử lý data display
-            alert('Load was performed.');
             //confirm hoặc cancel 01 order (update);
-            console.log(data)
             $("#inp-order-code").val(data.orderCode)
                 //sdsdfsd
             $('#modal-ma-don-hang').modal()
-
         }
     });
 }
