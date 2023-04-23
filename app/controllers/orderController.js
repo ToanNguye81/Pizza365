@@ -27,19 +27,6 @@ const getAllOrder = (request, response) => {
                 })
             }
         });
-
-    // orderModel.find((error, data) => {
-    //     if (error) {
-    //         return response.status(500).json({
-    //             status: "Internal server error",
-    //             message: error.message
-    //         })
-    //     }
-    //     return response.status(200).json({
-    //         status: "Get all Order successfully",
-    //         data: data
-    //     })
-    // })
 }
 
 const createOrder = (request, response) => {
@@ -189,14 +176,6 @@ const updateOrderById = (request, response) => {
         return response.status(400).json({
             status: "Bad Request",
             message: "orderID không hợp lệ"
-        })
-    }
-
-
-    if (body.orderCode !== undefined && body.orderCode.trim() === "") {
-        return response.status(400).json({
-            status: "Bad Request",
-            message: "orderCode không hợp lệ"
         })
     }
 
