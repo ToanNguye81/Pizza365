@@ -26,7 +26,7 @@ const getAllVoucher = (request, response) => {
 const createVoucher = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const body = request.body;
-    console.log({body})
+    console.log({ body })
 
     // B2: Validate dữ liệu
 
@@ -44,12 +44,13 @@ const createVoucher = (request, response) => {
     }
 
     // B3: Gọi Model tạo dữ liệu
+    // Create voucher
     const newVoucher = {
         _id: mongoose.Types.ObjectId(),
         voucherCode: body.voucherCode,
         discount: body.discount,
         ghiChu: body.ghiChu
-    }
+    };
     voucherModel.create(newVoucher, (error, data) => {
         if (error) {
             return response.status(500).json({
@@ -95,11 +96,11 @@ const getVoucherById = (request, response) => {
 
 const getVoucherByVoucherCode = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const {voucherCode} = request.params;
+    const { voucherCode } = request.params;
     console.log(voucherCode)
 
     // B2: Validate dữ liệu
-    if (voucherCode.trim()=="") {
+    if (voucherCode.trim() == "") {
         return response.status(400).json({
             status: "Bad Request",
             message: "Voucher code is empty"
@@ -107,7 +108,7 @@ const getVoucherByVoucherCode = (request, response) => {
     }
 
     // B3: Gọi Model tạo dữ liệu
-    voucherModel.findOne({voucherCode:voucherCode}, (error, data) => {
+    voucherModel.findOne({ voucherCode: voucherCode }, (error, data) => {
         if (error) {
             return response.status(500).json({
                 status: "Internal server error",

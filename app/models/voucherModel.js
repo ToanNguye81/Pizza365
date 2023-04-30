@@ -8,8 +8,8 @@ const Schema = mongoose.Schema
 const voucherSchema = new Schema({
     voucherCode: {
         type: String,
+        required: true,
         unique: true,
-        required: true
     },
     discount: {
         type: Number,
