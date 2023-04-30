@@ -6,12 +6,12 @@ const Schema = mongoose.Schema
 
 //Khởi tạo instance voucherSchema 
 const voucherSchema = new Schema({
-    maVoucher: {
+    voucherCode: {
         type: String,
         unique: true,
         required: true
     },
-    phanTramGiamGia: {
+    discount: {
         type: Number,
         required: true
     },

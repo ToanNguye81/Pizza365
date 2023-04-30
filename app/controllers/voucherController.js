@@ -26,16 +26,17 @@ const getAllVoucher = (request, response) => {
 const createVoucher = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const body = request.body;
+    console.log({body})
 
     // B2: Validate dữ liệu
 
-    if (!body.maVoucher) {
+    if (!body.voucherCode) {
         return response.status(400).json({
             status: "Bad request",
             message: "Mã voucher không hợp lệ"
         })
     }
-    if (isNaN(body.phanTramGiamGia) || body.phanTramGiamGia < 0) {
+    if (isNaN(body.discount) || body.discount < 0) {
         return response.status(400).json({
             status: "Bad request",
             message: "Phần trăm giảm giá không hợp lệ"
@@ -45,8 +46,8 @@ const createVoucher = (request, response) => {
     // B3: Gọi Model tạo dữ liệu
     const newVoucher = {
         _id: mongoose.Types.ObjectId(),
-        maVoucher: body.maVoucher,
-        phanTramGiamGia: body.phanTramGiamGia,
+        voucherCode: body.voucherCode,
+        discount: body.discount,
         ghiChu: body.ghiChu
     }
     voucherModel.create(newVoucher, (error, data) => {
@@ -92,6 +93,36 @@ const getVoucherById = (request, response) => {
     })
 }
 
+const getVoucherByVoucherCode = (request, response) => {
+    // B1: Chuẩn bị dữ liệu
+    const {voucherCode} = request.params;
+    console.log(voucherCode)
+
+    // B2: Validate dữ liệu
+    if (voucherCode.trim()=="") {
+        return response.status(400).json({
+            status: "Bad Request",
+            message: "Voucher code is empty"
+        })
+    }
+
+    // B3: Gọi Model tạo dữ liệu
+    voucherModel.findOne({voucherCode:voucherCode}, (error, data) => {
+        if (error) {
+            return response.status(500).json({
+                status: "Internal server error",
+                message: error.message
+            })
+        }
+
+        return response.status(200).json({
+            status: "Get detail Voucher successfully",
+            data: data
+        })
+    })
+}
+
+
 const updateVoucherById = (request, response) => {
     // B1: Chuẩn bị dữ liệu
     const voucherId = request.params.voucherId;
@@ -105,14 +136,14 @@ const updateVoucherById = (request, response) => {
         })
     }
 
-    if (!body.maVoucher) {
+    if (!body.voucherCode) {
         return response.status(400).json({
             status: "Bad request",
             message: "Mã voucher không hợp lệ"
         })
     }
 
-    if (isNaN(body.phanTramGiamGia) || body.phanTramGiamGia < 0) {
+    if (isNaN(body.discount) || body.discount < 0) {
         return response.status(400).json({
             status: "Bad request",
             message: "Phần trăm giảm giá không hợp lệ"
@@ -124,11 +155,11 @@ const updateVoucherById = (request, response) => {
     // B3: Gọi Model tạo dữ liệu
     const updateVoucher = {}
 
-    if (body.maVoucher !== undefined) {
-        updateVoucher.maVoucher = body.maVoucher
+    if (body.voucherCode !== undefined) {
+        updateVoucher.voucherCode = body.voucherCode
     }
-    if (body.phanTramGiamGia !== undefined) {
-        updateVoucher.phanTramGiamGia = body.phanTramGiamGia
+    if (body.discount !== undefined) {
+        updateVoucher.discount = body.discount
     }
     if (body.ghiChu !== undefined) {
         updateVoucher.ghiChu = body.ghiChu
@@ -180,6 +211,7 @@ const deleteVoucherById = (request, response) => {
 module.exports = {
     getAllVoucher,
     createVoucher,
+    getVoucherByVoucherCode,
     getVoucherById,
     updateVoucherById,
     deleteVoucherById

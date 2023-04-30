@@ -99,16 +99,16 @@ function getUserData(paramObject) {
 //Check mã giảm giá và tính discount
 function checkMaGiamGia(paramThongTinGuiDon) {
     "use strict";
-    var vMaGiamGia = paramThongTinGuiDon.voucher;
+    var vVoucherCode = paramThongTinGuiDon.voucher;
     // lấy data từ server   
     $.ajax({
-        url: gBASE_URL + "/voucher_detail/" + vMaGiamGia,
+        url: gBASE_URL + "/voucher-detail/" + vVoucherCode,
         type: "GET",
         dataType: 'json',
         success: function(responseObject) {
             console.log(responseObject);
             //Lấy phần trăm giảm giá
-            paramThongTinGuiDon.giamGia = parseInt(responseObject.phanTramGiamGia);
+            paramThongTinGuiDon.giamGia = parseInt(responseObject.discount);
             //Tính tiền phải thanh toán
             paramThongTinGuiDon.thanhTien = tienPhaiThanhToan(paramThongTinGuiDon);
             //Load data to modal

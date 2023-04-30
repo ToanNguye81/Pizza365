@@ -12,6 +12,8 @@ const voucherController = require("../controllers/voucherController")
 
 router.get("/vouchers", voucherMiddleware.getAllVoucherMiddleware, voucherController.getAllVoucher)
 
+router.get("/voucher-detail/:voucherCode", voucherMiddleware.getAllVoucherMiddleware, voucherController.getVoucherByVoucherCode)
+
 router.post("/vouchers", voucherMiddleware.createVoucherMiddleware, voucherController.createVoucher)
 
 router.get("/vouchers/:voucherId", voucherMiddleware.getDetailVoucherMiddleware, voucherController.getVoucherById)
