@@ -16,7 +16,7 @@ const orderSchema = new Schema({
         type: String,
         unique: true,
         default: () => {
-            return crypto.randomBytes(64).toString('hex').substr(0, 6);
+            return crypto.randomBytes(64).toString('hex').substr(0, 6).toUpperCase();
         }
     },
     pizzaType: {

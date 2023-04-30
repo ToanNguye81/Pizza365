@@ -65,7 +65,7 @@ function onSendBtnClick() {
     //Xử lý voucher nhập vào và hiển thị
     if (gThongTinGuiDon.voucher == "") {
         //Không có vourcher
-        gThongTinGuiDon.giamGia = 0;
+        gThongTinGuiDon.discount = 0;
         gThongTinGuiDon.thanhTien = gThongTinGuiDon.giaVND;
         //Load data to modal
         loadDataToModal(gThongTinGuiDon);
@@ -108,7 +108,7 @@ function checkMaGiamGia(paramThongTinGuiDon) {
         success: function(responseObject) {
             console.log(responseObject);
             //Lấy phần trăm giảm giá
-            paramThongTinGuiDon.giamGia = parseInt(responseObject.discount);
+            paramThongTinGuiDon.discount = parseInt(responseObject.data.discount);
             //Tính tiền phải thanh toán
             paramThongTinGuiDon.thanhTien = tienPhaiThanhToan(paramThongTinGuiDon);
             //Load data to modal
@@ -119,7 +119,7 @@ function checkMaGiamGia(paramThongTinGuiDon) {
         },
         error: function() {
             alert("Không tìm thấy mã giảm giá")
-            paramThongTinGuiDon.giamGia = 0;
+            paramThongTinGuiDon.discount = 0;
             paramThongTinGuiDon.thanhTien = paramThongTinGuiDon.giaVND;
             //Load data to modal
             loadDataToModal(paramThongTinGuiDon);
@@ -130,7 +130,7 @@ function checkMaGiamGia(paramThongTinGuiDon) {
 };
 //Hàm tính tiền phải trả
 function tienPhaiThanhToan(paramThongTinGuiDon) {
-    return paramThongTinGuiDon.giaVND * (100 - paramThongTinGuiDon.giamGia) / 100
+    return paramThongTinGuiDon.giaVND * (100 - paramThongTinGuiDon.discount) / 100
 };
 //valid Email
 function isPhoneNumber(inputtxt) {
@@ -206,7 +206,7 @@ function loadDataToModal(paramOrderObject) {
         "Loại pizza: " + paramOrderObject.pizzaType + '\r\n' +
         "Mã voucher: " + paramOrderObject.voucher + '\r\n' +
         "Giá vnd: " + paramOrderObject.giaVND + '\r\n' +
-        "Discount %:  " + paramOrderObject.giamGia + " %" + '\r\n' +
+        "Discount %:  " + paramOrderObject.discount + " %" + '\r\n' +
         "Phải thanh toán vnd: " + paramOrderObject.thanhTien;
 
     $("#textarea-thong-tin-chi-tiet").val(vAreaTextVal)

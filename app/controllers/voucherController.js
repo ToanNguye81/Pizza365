@@ -109,7 +109,7 @@ const getVoucherByVoucherCode = (request, response) => {
 
     // B3: Gọi Model tạo dữ liệu
     voucherModel.findOne({ voucherCode: voucherCode }, (error, data) => {
-        if (error) {
+        if (error||data === null) {
             return response.status(500).json({
                 status: "Internal server error",
                 message: error.message
