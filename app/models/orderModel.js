@@ -64,6 +64,10 @@ const orderSchema = new Schema({
         type: Number,
         require: true
     },
+    discount:{
+        type: Number,
+        require: true
+    },
 }, {
     //Lưu dấu bảng ghi được cập nhật vào thời gian nào
     timestamps: true

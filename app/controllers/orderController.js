@@ -31,10 +31,10 @@ const getAllOrder = (request, response) => {
 
 const createOrder = (request, response) => {
     // B1: Chuẩn bị dữ liệu
-    const { fullName, email, address, phone, pizzaSize, drink, pizzaType, loiNhan, voucher, duongKinh, suon, salad, soLuongNuoc, thanhTien } = request.body;
-    const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink"]
+    const { fullName, email, address, phone, pizzaSize, drink, pizzaType, loiNhan, voucher,discount, duongKinh, suon, salad, soLuongNuoc, thanhTien } = request.body;
+    const fields = ["fullName", "email", "address", "phone", "pizzaSize", "pizzaType", "drink","discount"]
 
-    console.log({ fullName, email, address, phone, pizzaSize, drink, pizzaType, loiNhan, voucher, duongKinh, suon, salad, soLuongNuoc, thanhTien })
+    console.log({ fullName, email, address, phone, pizzaSize, drink, pizzaType, loiNhan, voucher,discount, duongKinh, suon, salad, soLuongNuoc, thanhTien })
     // Check isEmpty in input fields 
     for (const field of fields) {
         if (!request.body[field]) {
@@ -49,7 +49,7 @@ const createOrder = (request, response) => {
     // B3: Gọi Model tạo dữ liệu user và order
     const newOrder = {
         _id: mongoose.Types.ObjectId(),
-        pizzaSize, pizzaType, voucher, loiNhan,
+        pizzaSize, pizzaType, voucher, loiNhan,discount,
         drink, duongKinh, suon, salad, soLuongNuoc, thanhTien, status:"Open"
     }
     const newUser = { fullName, email, address, phone }

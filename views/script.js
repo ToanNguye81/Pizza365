@@ -5,47 +5,47 @@ const gBASE_URL = "/pizza365"
 
 
 /*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
-$(document).ready(function() {
+$(document).ready(function () {
     onPageLoading();
     //Hàm gán xử lý btn-small cho hàm xử lý sự kiện 
-    $('#btn-small').click(function() {
+    $('#btn-small').click(function () {
         changeComboBtnColor(this)
         getCombo(gThongTinGuiDon, "S", 20, 2, 200, 2, 150000);
     });
     //Hàm gán xử lý btn-medium cho hàm xử lý sự kiện 
-    $('#btn-medium').click(function() {
+    $('#btn-medium').click(function () {
         changeComboBtnColor(this)
         getCombo(gThongTinGuiDon, "M", 25, 4, 300, 3, 200000);
     });
     //Hàm gán xử lý btn-large cho hàm xử lý sự kiện 
-    $('#btn-large').click(function() {
+    $('#btn-large').click(function () {
         changeComboBtnColor(this)
         getCombo(gThongTinGuiDon, "L", 30, 8, 500, 4, 250000);
     });
     //Hàm gán xử lý btn-ocean cho hàm xử lý sự kiện 
-    $('#btn-ocean').click(function() {
+    $('#btn-ocean').click(function () {
         changePizzaTypeBtnColor(this)
         gThongTinGuiDon.pizzaType = "OCEAN MANIA";
         console.log("Bạn đã gọi kiểu pizza: OCEAN MANIA ")
     });
     //Hàm gán xử lý btn-hawaiian cho hàm xử lý sự kiện 
-    $('#btn-hawaiian').click(function() {
+    $('#btn-hawaiian').click(function () {
         changePizzaTypeBtnColor(this)
         gThongTinGuiDon.pizzaType = "HAWAIIAN";
         console.log("Bạn đã gọi kiểu pizza: HAWAIIAN ")
     });
     //Hàm gán xử lý btn-bacon cho hàm xử lý sự kiện 
-    $('#btn-bacon').click(function() {
+    $('#btn-bacon').click(function () {
         changePizzaTypeBtnColor(this)
         gThongTinGuiDon.pizzaType = "CHEESY CHICKEN BACON";
         console.log("Bạn đã gọi kiểu pizza: CHEESY CHICKEN BACON ")
     });
     //Hàm xử lý khi nhấn send
-    $('#btn-send').click(function() {
+    $('#btn-send').click(function () {
         onSendBtnClick();
     });
     //Hàm thực hiện khi click tạo đơn
-    $('#btn-tao-don').click(function() {
+    $('#btn-tao-don').click(function () {
         createNewOrder(gThongTinGuiDon);
     });
 })
@@ -105,10 +105,20 @@ function checkMaGiamGia(paramThongTinGuiDon) {
         url: gBASE_URL + "/voucher-detail/" + vVoucherCode,
         type: "GET",
         dataType: 'json',
-        success: function(responseObject) {
+        success: function (responseObject) {
             console.log(responseObject);
-            //Lấy phần trăm giảm giá
-            paramThongTinGuiDon.discount = parseInt(responseObject.data.discount);
+            if (responseObject.data) {
+                //Lấy phần trăm giảm giá
+                paramThongTinGuiDon.discount = parseInt(responseObject.data.discount);
+            } else {
+                alert("Không tìm thấy mã giảm giá")
+                paramThongTinGuiDon.discount = 0;
+                paramThongTinGuiDon.thanhTien = paramThongTinGuiDon.giaVND;
+                //Load data to modal
+                loadDataToModal(paramThongTinGuiDon);
+                //hiện modal
+                $('#modal-order-detail').modal()
+            }
             //Tính tiền phải thanh toán
             paramThongTinGuiDon.thanhTien = tienPhaiThanhToan(paramThongTinGuiDon);
             //Load data to modal
@@ -117,7 +127,7 @@ function checkMaGiamGia(paramThongTinGuiDon) {
             $('#modal-order-detail').modal()
 
         },
-        error: function() {
+        error: function () {
             alert("Không tìm thấy mã giảm giá")
             paramThongTinGuiDon.discount = 0;
             paramThongTinGuiDon.thanhTien = paramThongTinGuiDon.giaVND;
@@ -216,17 +226,17 @@ function loadDataToModal(paramOrderObject) {
 function createNewOrder(paramOrderInfo) {
     "use strict"
     $('#modal-order-detail').modal('hide')
-        // Update dữ liệu lên server
+    // Update dữ liệu lên server
     $.ajax({
         url: gBASE_URL + "/orders",
         type: 'POST',
         data: JSON.stringify(paramOrderInfo),
         dataType: 'json', // added data type
         contentType: "application/json;charset=UTF-8",
-        success: function(data) {
+        success: function (data) {
             //confirm hoặc cancel 01 order (update);
             $("#inp-order-code").val(data.orderCode)
-                //sdsdfsd
+            //sdsdfsd
             $('#modal-ma-don-hang').modal()
         }
     });
@@ -279,14 +289,14 @@ function loadDrinkList() {
         url: gBASE_URL + "/drinks",
         type: "GET",
         dataType: 'json',
-        success: function(responseObject) {
+        success: function (responseObject) {
             console.log(responseObject);
             //Load data to modal
             loadDataToDrinkSelect(responseObject);
             //Hiện modal lên
             console.log("Finished load drink")
         },
-        error: function(error) {
+        error: function (error) {
             console.assert(error.responseText);
         }
     });
