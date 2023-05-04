@@ -14,7 +14,8 @@
     <!-- Import DataTable Library -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
+    <!-- Import Moment Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 </head>
 
@@ -1011,8 +1012,8 @@
             $("#inp-update-dia-chi").val(paramOrderObject.user.address);
             $("#inp-update-loi-nhan").val(paramOrderObject.loiNhan);
             $("#inp-update-trang-thai").val(paramOrderObject.status);
-            $("#inp-update-ngay-tao").val(paramOrderObject.createdAt);
-            $("#inp-update-ngay-cap-nhat").val(paramOrderObject.updatedAt);
+            $("#inp-update-ngay-tao").val(moment(paramOrderObject.createdAt).format("YYYY-MM-DD"));
+            $("#inp-update-ngay-cap-nhat").val(moment(paramOrderObject.updatedAt).format("YYYY-MM-DD"));
         }
 
         // Hàm clear create form
